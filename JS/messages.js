@@ -1,0 +1,1864 @@
+document.addEventListener("DOMContentLoaded", () => {
+
+    /* =========================================
+       ELEMENTS
+    ========================================= */
+
+    const conversationList =
+        document.getElementById("conversationList");
+
+    const noConversations =
+        document.getElementById("noConversations");
+
+    const chatEmpty =
+        document.getElementById("chatEmpty");
+
+    const chatContent =
+        document.getElementById("chatContent");
+
+    const chatPersonName =
+        document.getElementById("chatPersonName");
+
+    const chatPropertyName =
+        document.getElementById("chatPropertyName");
+
+    const chatMessages =
+        document.getElementById("chatMessages");
+
+    const messageForm =
+        document.getElementById("messageForm");
+
+    const messageInput =
+        document.getElementById("messageInput");
+
+
+    /* =========================================
+       DEFAULT AVATARS
+    ========================================= */
+
+    const DEFAULT_TENANT_AVATAR =
+        "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80";
+
+    const DEFAULT_OWNER_AVATAR =
+        "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=200&q=80";
+
+
+    /* =========================================
+       TENANT PROFILE
+    ========================================= */
+
+    let tenantProfile = {
+        name: "Tenant",
+        accountType: "tenant",
+        bio: "LeaseHub tenant",
+        avatar: DEFAULT_TENANT_AVATAR
+    };
+
+    try {
+
+        const savedProfile =
+            JSON.parse(
+                localStorage.getItem(
+                    "leasehubTenantProfile"
+                )
+            );
+
+        if (savedProfile) {
+
+            tenantProfile = {
+                ...tenantProfile,
+                ...savedProfile
+            };
+        }
+
+    } catch (error) {
+
+        console.error(
+            "Unable to load tenant profile:",
+            error
+        );
+    }
+
+
+    /* =========================================
+       PROFILE ELEMENTS
+    ========================================= */
+
+    const openProfileBtn =
+        document.getElementById(
+            "openTenantProfileBtn"
+        );
+
+    const closeProfileBtn =
+        document.getElementById(
+            "closeTenantProfileBtn"
+        );
+
+    const profileDrawer =
+        document.getElementById(
+            "tenantProfileDrawer"
+        );
+
+    const profilePreview =
+        document.getElementById(
+            "tenantProfilePreview"
+        );
+
+    const profilePictureInput =
+        document.getElementById(
+            "tenantProfilePictureInput"
+        );
+
+    const displayNameInput =
+        document.getElementById(
+            "tenantDisplayName"
+        );
+
+    const accountTypeInput =
+        document.getElementById(
+            "tenantAccountType"
+        );
+
+    const bioInput =
+        document.getElementById(
+            "tenantBio"
+        );
+
+    const saveProfileBtn =
+        document.getElementById(
+            "saveTenantProfileBtn"
+        );
+
+    const profileMessage =
+        document.getElementById(
+            "tenantProfileMessage"
+        );
+
+    const topProfileAvatar =
+        document.getElementById(
+            "tenantTopProfileAvatar"
+        );
+
+    const topProfileName =
+        document.getElementById(
+            "tenantTopProfileName"
+        );
+
+    const chatOwnerAvatar =
+        document.getElementById(
+            "tenantChatOwnerAvatar"
+        );
+
+
+    /* =========================================
+       UPDATE PROFILE UI
+    ========================================= */
+
+    function updateProfileUI() {
+
+        if (topProfileAvatar) {
+
+            topProfileAvatar.src =
+                tenantProfile.avatar ||
+                DEFAULT_TENANT_AVATAR;
+        }
+
+        if (topProfileName) {
+
+            topProfileName.textContent =
+                tenantProfile.name ||
+                "Tenant";
+        }
+
+        if (profilePreview) {
+
+            profilePreview.src =
+                tenantProfile.avatar ||
+                DEFAULT_TENANT_AVATAR;
+        }
+
+        if (displayNameInput) {
+
+            displayNameInput.value =
+                tenantProfile.name ||
+                "";
+        }
+
+        if (accountTypeInput) {
+
+            accountTypeInput.value =
+                tenantProfile.accountType ||
+                "tenant";
+        }
+
+        if (bioInput) {
+
+            bioInput.value =
+                tenantProfile.bio ||
+                "";
+        }
+    }
+
+    updateProfileUI();
+
+
+    /* =========================================
+       PROFILE DRAWER
+    ========================================= */
+
+    if (openProfileBtn && profileDrawer) {
+
+        openProfileBtn.addEventListener(
+            "click",
+            () => {
+
+                updateProfileUI();
+
+                profileDrawer.classList.add(
+                    "open"
+                );
+            }
+        );
+    }
+
+
+    if (closeProfileBtn) {
+
+        closeProfileBtn.addEventListener(
+            "click",
+            () => {
+
+                profileDrawer?.classList.remove(
+                    "open"
+                );
+            }
+        );
+    }
+
+
+    /* =========================================
+       PROFILE IMAGE
+    ========================================= */
+
+    if (profilePictureInput) {
+
+        profilePictureInput.addEventListener(
+            "change",
+            (event) => {
+
+                const file =
+                    event.target.files[0];
+
+                if (!file) return;
+
+                if (!file.type.startsWith("image/")) {
+
+                    alert(
+                        "Please select an image file."
+                    );
+
+                    return;
+                }
+
+                const reader =
+                    new FileReader();
+
+                reader.onload =
+                    (e) => {
+
+                        tenantProfile.avatar =
+                            e.target.result;
+
+                        if (profilePreview) {
+
+                            profilePreview.src =
+                                tenantProfile.avatar;
+                        }
+
+                        if (topProfileAvatar) {
+
+                            topProfileAvatar.src =
+                                tenantProfile.avatar;
+                        }
+                    };
+
+                reader.readAsDataURL(file);
+            }
+        );
+    }
+
+
+    /* =========================================
+       SAVE PROFILE
+    ========================================= */
+
+    if (saveProfileBtn) {
+
+        saveProfileBtn.addEventListener(
+            "click",
+            () => {
+
+                const name =
+                    displayNameInput?.value.trim();
+
+                const accountType =
+                    accountTypeInput?.value;
+
+                const bio =
+                    bioInput?.value.trim();
+
+                tenantProfile = {
+
+                    name:
+                        name || "Tenant",
+
+                    accountType:
+                        accountType || "tenant",
+
+                    bio:
+                        bio || "LeaseHub tenant",
+
+                    avatar:
+                        tenantProfile.avatar ||
+                        DEFAULT_TENANT_AVATAR
+                };
+
+                localStorage.setItem(
+                    "leasehubTenantProfile",
+                    JSON.stringify(
+                        tenantProfile
+                    )
+                );
+
+                updateProfileUI();
+
+                if (profileMessage) {
+
+                    profileMessage.textContent =
+                        "Profile saved successfully";
+
+                    profileMessage.style.display =
+                        "block";
+
+                    setTimeout(
+                        () => {
+
+                            profileMessage.style.display =
+                                "none";
+
+                        },
+                        2500
+                    );
+                }
+            }
+        );
+    }
+
+
+    /* =========================================
+       CONVERSATIONS
+    ========================================= */
+
+    function getConversations() {
+
+        try {
+
+            const saved =
+                localStorage.getItem(
+                    "leasehubMessages"
+                );
+
+            if (!saved) return [];
+
+            const conversations =
+                JSON.parse(saved);
+
+            return Array.isArray(
+                conversations
+            )
+                ? conversations
+                : [];
+
+        } catch (error) {
+
+            console.error(
+                "Unable to load conversations:",
+                error
+            );
+
+            return [];
+        }
+    }
+
+
+    function saveConversations(
+        conversations
+    ) {
+
+        localStorage.setItem(
+            "leasehubMessages",
+            JSON.stringify(
+                conversations
+            )
+        );
+    }
+
+
+    /* =========================================
+       ESCAPE HTML
+    ========================================= */
+
+    function escapeHTML(value) {
+
+        const div =
+            document.createElement("div");
+
+        div.textContent =
+            value || "";
+
+        return div.innerHTML;
+    }
+
+
+    /* =========================================
+       TIME
+    ========================================= */
+
+    function formatTime(dateString) {
+
+        if (!dateString) return "";
+
+        const date =
+            new Date(dateString);
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+            return "";
+        }
+
+        return date.toLocaleTimeString(
+            [],
+            {
+                hour: "2-digit",
+                minute: "2-digit"
+            }
+        );
+    }
+
+
+    /* =========================================
+       RENDER CONVERSATIONS
+    ========================================= */
+
+    function renderConversations() {
+
+        if (!conversationList) return;
+
+        const conversations =
+            getConversations();
+
+        conversationList.innerHTML = "";
+
+        if (
+            conversations.length === 0
+        ) {
+
+            if (noConversations) {
+
+                noConversations.style.display =
+                    "block";
+            }
+
+            return;
+        }
+
+        if (noConversations) {
+
+            noConversations.style.display =
+                "none";
+        }
+
+
+        conversations.forEach(
+            (conversation) => {
+
+                const messages =
+                    Array.isArray(
+                        conversation.messages
+                    )
+                        ? conversation.messages
+                        : [];
+
+                const lastMessage =
+                    messages[
+                        messages.length - 1
+                    ];
+
+                const item =
+                    document.createElement(
+                        "button"
+                    );
+
+                item.type = "button";
+
+                item.className =
+                    "conversation-item";
+
+                item.dataset.conversationId =
+                    conversation.id;
+
+
+                item.innerHTML = `
+
+                    <img
+                        class="conversation-avatar"
+                        src="${
+                            conversation.ownerAvatar ||
+                            DEFAULT_OWNER_AVATAR
+                        }"
+                        alt="Property Owner"
+                    >
+
+                    <div class="conversation-info">
+
+                        <div class="conversation-top">
+
+                            <span class="conversation-name">
+
+                                ${escapeHTML(
+                                    conversation.ownerName ||
+                                    "Property Owner"
+                                )}
+
+                            </span>
+
+                            <span class="conversation-time">
+
+                                ${
+                                    lastMessage
+                                        ? formatTime(
+                                            lastMessage.createdAt
+                                        )
+                                        : ""
+                                }
+
+                            </span>
+
+                        </div>
+
+                        <div class="conversation-property">
+
+                            ${escapeHTML(
+                                conversation.propertyTitle ||
+                                "Property"
+                            )}
+
+                        </div>
+
+                        <div class="conversation-preview">
+
+                            ${
+                                lastMessage
+                                    ? escapeHTML(
+                                        lastMessage.text
+                                    )
+                                    : "Start a conversation"
+                            }
+
+                        </div>
+
+                    </div>
+                `;
+
+
+                item.addEventListener(
+                    "click",
+                    () => {
+
+                        openConversation(
+                            conversation.id
+                        );
+                    }
+                );
+
+
+                conversationList.appendChild(
+                    item
+                );
+            }
+        );
+    }
+
+
+    /* =========================================
+       OPEN CONVERSATION
+    ========================================= */
+
+    function openConversation(
+        conversationId
+    ) {
+
+        const conversations =
+            getConversations();
+
+        const conversation =
+            conversations.find(
+                (item) =>
+                    String(item.id) ===
+                    String(conversationId)
+            );
+
+        if (!conversation) {
+
+            console.error(
+                "Conversation not found:",
+                conversationId
+            );
+
+            return;
+        }
+
+
+        localStorage.setItem(
+            "activeConversationId",
+            conversation.id
+        );
+
+
+        if (chatEmpty) {
+
+            chatEmpty.style.display =
+                "none";
+        }
+
+
+        if (chatContent) {
+
+            chatContent.style.display =
+                "flex";
+        }
+
+
+        if (chatPersonName) {
+
+            chatPersonName.textContent =
+                conversation.ownerName ||
+                "Property Owner";
+        }
+
+
+        if (chatPropertyName) {
+
+            chatPropertyName.textContent =
+                conversation.propertyTitle ||
+                "Property";
+        }
+
+
+        if (chatOwnerAvatar) {
+
+            chatOwnerAvatar.src =
+                conversation.ownerAvatar ||
+                DEFAULT_OWNER_AVATAR;
+        }
+
+
+        renderMessages(
+            conversation
+        );
+
+
+        document
+            .querySelectorAll(
+                ".conversation-item"
+            )
+            .forEach(
+                (item) => {
+
+                    item.classList.toggle(
+                        "active",
+                        String(
+                            item.dataset.conversationId
+                        ) ===
+                        String(
+                            conversation.id
+                        )
+                    );
+                }
+            );
+    }
+
+
+    /* =========================================
+       RENDER MESSAGES
+    ========================================= */
+
+    function renderMessages(
+        conversation
+    ) {
+
+        if (!chatMessages) return;
+
+        chatMessages.innerHTML = "";
+
+        const messages =
+            Array.isArray(
+                conversation.messages
+            )
+                ? conversation.messages
+                : [];
+
+
+        if (messages.length === 0) {
+
+            chatMessages.innerHTML = `
+
+                <div
+                    class="chat-start-message"
+                    style="
+                        text-align:center;
+                        padding:40px 20px;
+                        color:#667085;
+                    "
+                >
+
+                    <div
+                        class="chat-start-icon"
+                        style="font-size:35px;"
+                    >
+                        <i
+                            class="bx bx-message-rounded"
+                            aria-hidden="true"
+                        ></i>
+                    </div>
+
+                    <strong>
+                        Start your conversation
+                    </strong>
+
+                    <p>
+                        Ask the property owner
+                        about the property,
+                        viewing times or availability.
+                    </p>
+
+                </div>
+
+            `;
+
+            return;
+        }
+
+
+        let previousDay = "";
+
+        messages.forEach(
+            (message) => {
+
+                const messageDate = new Date(message.createdAt);
+                const dayKey = Number.isNaN(messageDate.getTime())
+                    ? ""
+                    : messageDate.toDateString();
+
+                if (dayKey && dayKey !== previousDay) {
+                    const separator = document.createElement("div");
+                    separator.className = "chat-date-separator";
+                    separator.textContent = dayKey === new Date().toDateString()
+                        ? "Today"
+                        : messageDate.toLocaleDateString("en-NG", {
+                            weekday: "short",
+                            day: "numeric",
+                            month: "short"
+                        });
+                    chatMessages.appendChild(separator);
+                    previousDay = dayKey;
+                }
+
+                const isTenant =
+                    message.sender ===
+                    "tenant";
+
+
+                const row =
+                    document.createElement(
+                        "div"
+                    );
+
+
+                /* =================================
+                   MESSAGE ROW
+                ================================= */
+
+                row.className =
+                    `message-row ${
+                        isTenant
+                            ? "tenant"
+                            : "owner"
+                    }`;
+
+
+                const avatar =
+                    message.senderAvatar ||
+                    (
+                        isTenant
+                            ? tenantProfile.avatar
+                            : (
+                                conversation.ownerAvatar ||
+                                DEFAULT_OWNER_AVATAR
+                            )
+                    );
+
+
+                const senderName =
+                    message.senderName ||
+                    (
+                        isTenant
+                            ? (
+                                tenantProfile.name ||
+                                "Tenant"
+                            )
+                            : (
+                                conversation.ownerName ||
+                                "Property Owner"
+                            )
+                    );
+
+
+                row.innerHTML = `
+
+                    ${
+                        !isTenant
+                            ? `
+                                <img
+                                    class="message-avatar"
+                                    src="${escapeHTML(avatar)}"
+                                    alt="${escapeHTML(senderName)}"
+                                >
+                              `
+                            : ""
+                    }
+
+                    <div class="message-content">
+
+                        <div
+                            class="message-role"
+                        >
+                            ${
+                                isTenant
+                                    ? "TENANT"
+                                    : "OWNER"
+                            }
+                        </div>
+
+                        <div
+                            class="message-bubble"
+                        >
+
+                            <div
+                                class="message-text"
+                            >
+                                ${escapeHTML(
+                                    message.text
+                                )}
+                            </div>
+
+                            <div
+                                class="message-meta"
+                            >
+
+                                ${formatTime(
+                                    message.createdAt
+                                )}
+
+                                ${
+                                    isTenant
+                                        ? `<span class="message-check">✓✓</span>`
+                                        : ""
+                                }
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    ${
+                        isTenant
+                            ? `
+                                <img
+                                    class="message-avatar"
+                                    src="${escapeHTML(avatar)}"
+                                    alt="${escapeHTML(senderName)}"
+                                >
+                              `
+                            : ""
+                    }
+
+                `;
+
+
+                chatMessages.appendChild(
+                    row
+                );
+            }
+        );
+
+
+        chatMessages.scrollTop =
+            chatMessages.scrollHeight;
+    }
+
+
+    /* =========================================
+       SEND MESSAGE
+    ========================================= */
+
+    if (messageForm) {
+
+        messageForm.addEventListener(
+            "submit",
+            (event) => {
+
+                event.preventDefault();
+
+
+                const text =
+                    messageInput
+                        ?.value
+                        .trim();
+
+
+                if (!text) return;
+
+
+                const activeConversationId =
+                    localStorage.getItem(
+                        "activeConversationId"
+                    );
+
+
+                if (!activeConversationId) {
+
+                    alert(
+                        "Please select a conversation first."
+                    );
+
+                    return;
+                }
+
+
+                const conversations =
+                    getConversations();
+
+
+                const conversation =
+                    conversations.find(
+                        (item) =>
+                            String(item.id) ===
+                            String(
+                                activeConversationId
+                            )
+                    );
+
+
+                if (!conversation) {
+
+                    alert(
+                        "This conversation could not be found."
+                    );
+
+                    return;
+                }
+
+
+                if (
+                    !Array.isArray(
+                        conversation.messages
+                    )
+                ) {
+
+                    conversation.messages = [];
+                }
+
+
+                const newMessage = {
+
+                    id:
+                        Date.now(),
+
+                    sender:
+                        "tenant",
+
+                    senderName:
+                        tenantProfile.name ||
+                        "Tenant",
+
+                    senderAvatar:
+                        tenantProfile.avatar ||
+                        DEFAULT_TENANT_AVATAR,
+
+                    text:
+                        text,
+
+                    createdAt:
+                        new Date().toISOString()
+                };
+
+
+                conversation.messages.push(
+                    newMessage
+                );
+
+
+                /* Mark conversation as read */
+
+                conversation.unread = 0;
+
+
+                saveConversations(
+                    conversations
+                );
+
+
+                messageInput.value = "";
+
+
+                renderMessages(
+                    conversation
+                );
+
+
+                renderConversations();
+
+
+                /* Re-select active conversation */
+
+                const activeItem =
+                    Array.from(
+                        document.querySelectorAll(
+                            ".conversation-item"
+                        )
+                    ).find(
+                        (item) =>
+                            String(
+                                item.dataset.conversationId
+                            ) ===
+                            String(
+                                conversation.id
+                            )
+                    );
+
+                if (activeItem) {
+
+                    activeItem.classList.add(
+                        "active"
+                    );
+                }
+            }
+        );
+    }
+
+
+    /* =========================================
+       SEARCH
+    ========================================= */
+
+    const conversationSearch =
+        document.getElementById(
+            "tenantConversationSearch"
+        );
+
+
+    if (conversationSearch) {
+
+        conversationSearch.addEventListener(
+            "input",
+            () => {
+
+                const search =
+                    conversationSearch.value
+                        .toLowerCase()
+                        .trim();
+
+
+                document
+                    .querySelectorAll(
+                        ".conversation-item"
+                    )
+                    .forEach(
+                        (item) => {
+
+                            const matches =
+                                item.textContent
+                                    .toLowerCase()
+                                    .includes(
+                                        search
+                                    );
+
+                            item.style.display =
+                                matches
+                                    ? ""
+                                    : "none";
+                        }
+                    );
+            }
+        );
+    }
+
+
+    /* =========================================
+       FILTER BUTTONS
+    ========================================= */
+
+    const filterButtons =
+        document.querySelectorAll(
+            ".message-filter"
+        );
+
+
+    filterButtons.forEach(
+        (button) => {
+
+            button.addEventListener(
+                "click",
+                () => {
+
+                    filterButtons.forEach(
+                        (btn) =>
+                            btn.classList.remove(
+                                "active"
+                            )
+                    );
+
+                    button.classList.add(
+                        "active"
+                    );
+
+
+                    const filter =
+                        button.dataset.filter;
+
+
+                    const conversations =
+                        getConversations();
+
+
+                    document
+                        .querySelectorAll(
+                            ".conversation-item"
+                        )
+                        .forEach(
+                            (item) => {
+
+                                const conversation =
+                                    conversations.find(
+                                        (c) =>
+                                            String(
+                                                c.id
+                                            ) ===
+                                            String(
+                                                item.dataset
+                                                    .conversationId
+                                            )
+                                    );
+
+
+                                if (!conversation) return;
+
+
+                                if (
+                                    filter ===
+                                    "unread"
+                                ) {
+
+                                    item.style.display =
+                                        conversation.unread >
+                                        0
+                                            ? ""
+                                            : "none";
+
+                                } else if (
+                                    filter ===
+                                    "starred"
+                                ) {
+
+                                    item.style.display =
+                                        conversation.starred
+                                            ? ""
+                                            : "none";
+
+                                } else {
+
+                                    item.style.display =
+                                        "";
+                                }
+                            }
+                        );
+                }
+            );
+        }
+    );
+
+
+    /* =========================================
+       START
+    ========================================= */
+
+    renderConversations();
+
+
+    const activeConversationId =
+        localStorage.getItem(
+            "activeConversationId"
+        );
+
+
+    if (activeConversationId) {
+
+        openConversation(
+            activeConversationId
+        );
+    }
+
+
+    /* =========================================
+       REFRESH WHEN STORAGE CHANGES
+    ========================================= */
+
+    window.addEventListener(
+        "storage",
+        () => {
+
+            renderConversations();
+
+            const activeId =
+                localStorage.getItem(
+                    "activeConversationId"
+                );
+
+            if (activeId) {
+
+                openConversation(
+                    activeId
+                );
+            }
+
+            updateProfileUI();
+        }
+    );
+
+
+    window.addEventListener(
+        "pageshow",
+        () => {
+
+            renderConversations();
+
+            const activeId =
+                localStorage.getItem(
+                    "activeConversationId"
+                );
+
+            if (activeId) {
+
+                openConversation(
+                    activeId
+                );
+            }
+
+            updateProfileUI();
+        }
+    );
+
+});
+
+
+/* =========================================================
+   LEASEHUB OWNER PROFILE + CHAT ACTION CONTROLS
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+
+        function esc(value) {
+
+            return String(
+                value ?? ""
+            ).replace(
+                /[&<>"']/g,
+                (character) => {
+
+                    const entities = {
+                        "&": "&amp;",
+                        "<": "&lt;",
+                        ">": "&gt;",
+                        '"': "&quot;",
+                        "'": "&#039;"
+                    };
+
+                    return entities[character];
+                }
+            );
+        }
+
+
+        function read(
+            key,
+            fallback
+        ) {
+
+            try {
+
+                const value =
+                    JSON.parse(
+                        localStorage.getItem(
+                            key
+                        ) || "null"
+                    );
+
+                return value ?? fallback;
+
+            } catch {
+
+                return fallback;
+            }
+        }
+
+
+        function conversations() {
+
+            const data =
+                read(
+                    "leasehubMessages",
+                    []
+                );
+
+            return Array.isArray(data)
+                ? data
+                : [];
+        }
+
+
+        function activeConversation() {
+
+            const id =
+                localStorage.getItem(
+                    "activeConversationId"
+                );
+
+            return conversations().find(
+                (conversation) =>
+                    String(
+                        conversation.id
+                    ) ===
+                    String(id)
+            );
+        }
+
+
+        const ownerProfileBtn =
+            document.getElementById(
+                "chatOwnerProfileBtn"
+            );
+
+        const callBtn =
+            document.getElementById(
+                "chatCallBtn"
+            );
+
+        const videoBtn =
+            document.getElementById(
+                "chatVideoBtn"
+            );
+
+
+        /* =========================================
+           OPEN OWNER PROFILE
+        ========================================= */
+
+        function openOwnerProfile() {
+
+            const conversation =
+                activeConversation();
+
+            if (!conversation) return;
+
+
+            const ownerId =
+                conversation.ownerId;
+
+
+            const all =
+                Array.isArray(
+                    window.properties
+                )
+                    ? window.properties
+                    : read(
+                        "leasehubProperties",
+                        []
+                    );
+
+
+            const ownerProperties =
+                all
+                    .filter(
+                        (property) => {
+
+                            if (
+                                ownerId != null
+                            ) {
+
+                                return (
+                                    String(
+                                        property.ownerId
+                                    ) ===
+                                    String(
+                                        ownerId
+                                    )
+                                );
+                            }
+
+                            return (
+                                String(
+                                    property.ownerName ||
+                                    ""
+                                ).toLowerCase()
+                                ===
+                                String(
+                                    conversation.ownerName ||
+                                    ""
+                                ).toLowerCase()
+                            );
+                        }
+                    )
+                    .filter(
+                        (property) =>
+                            String(
+                                property.verificationStatus ||
+                                ""
+                            ).toLowerCase() !==
+                            "rejected"
+                    );
+
+
+            let panel =
+                document.getElementById(
+                    "ownerProfilePanel"
+                );
+
+
+            if (!panel) {
+
+                panel =
+                    document.createElement(
+                        "div"
+                    );
+
+                panel.id =
+                    "ownerProfilePanel";
+
+                panel.className =
+                    "owner-profile-panel";
+
+                document.body.appendChild(
+                    panel
+                );
+            }
+
+
+            const avatar =
+                conversation.ownerAvatar ||
+                ownerProperties[0]?.ownerAvatar ||
+                DEFAULT_OWNER_AVATAR;
+
+
+            panel.innerHTML = `
+
+                <aside
+                    class="owner-profile-card"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-label="Property owner profile"
+                >
+
+                    <button
+                        type="button"
+                        class="owner-profile-close"
+                        id="closeOwnerProfile"
+                        aria-label="Close owner profile"
+                    >
+                        <i
+                            class="bx bx-x"
+                            aria-hidden="true"
+                        ></i>
+                    </button>
+
+
+                    <div class="owner-profile-head">
+
+                        <img
+                            class="owner-profile-avatar"
+                            src="${esc(avatar)}"
+                            alt="${esc(
+                                conversation.ownerName ||
+                                "Property Owner"
+                            )}"
+                        >
+
+
+                        <div>
+
+                            <h2>
+                                ${esc(
+                                    conversation.ownerName ||
+                                    "Property Owner"
+                                )}
+                            </h2>
+
+                            <p>
+
+                                <i
+                                    class="bx bx-user-check"
+                                    aria-hidden="true"
+                                ></i>
+
+                                LeaseHub property owner
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="owner-profile-bio">
+
+                        ${esc(
+                            conversation.ownerBio ||
+                            ownerProperties[0]?.ownerBio ||
+                            "Property owner on LeaseHub. Contact them through LeaseHub before sharing personal details."
+                        )}
+
+                    </div>
+
+
+                    <h3
+                        style="
+                            margin:22px 0 8px;
+                            font-size:14px;
+                        "
+                    >
+                        Properties by this owner
+                    </h3>
+
+
+                    <div class="owner-profile-list">
+
+                        ${
+                            ownerProperties
+                                .slice(0, 4)
+                                .map(
+                                    (property) => `
+
+                                        <a
+                                            class="owner-profile-property"
+                                            href="property-details.html?id=${encodeURIComponent(
+                                                property.id
+                                            )}"
+                                        >
+
+                                            <img
+                                                src="${esc(
+                                                    property.image ||
+                                                    property.images?.[0] ||
+                                                    "IMAGES/Lease Hub logo.png"
+                                                )}"
+                                                alt=""
+                                            >
+
+                                            <div>
+
+                                                <strong>
+                                                    ${esc(
+                                                        property.title ||
+                                                        "Property"
+                                                    )}
+                                                </strong>
+
+                                                <span>
+
+                                                    ${esc(
+                                                        property.location ||
+                                                        property.city ||
+                                                        "Nigeria"
+                                                    )}
+
+                                                    · ₦${new Intl.NumberFormat(
+                                                        "en-NG"
+                                                    ).format(
+                                                        Number(
+                                                            property.price
+                                                        ) || 0
+                                                    )}
+
+                                                    /
+                                                    ${esc(
+                                                        property.period ||
+                                                        ""
+                                                    )}
+
+                                                </span>
+
+                                            </div>
+
+                                        </a>
+
+                                    `
+                                )
+                                .join("")
+                            ||
+                            `
+                                <div class="owner-profile-bio">
+                                    This owner has no other public properties yet.
+                                </div>
+                            `
+                        }
+
+                    </div>
+
+
+                    <button
+                        type="button"
+                        class="owner-profile-viewmore"
+                        id="ownerViewMoreBtn"
+                    >
+
+                        View More Properties
+
+                        <i
+                            class="bx bx-right-arrow-alt"
+                            aria-hidden="true"
+                        ></i>
+
+                    </button>
+
+                </aside>
+
+            `;
+
+
+            panel.classList.add(
+                "is-open"
+            );
+
+            document.body.classList.add(
+                "modal-open"
+            );
+
+
+            const closeButton =
+                panel.querySelector(
+                    "#closeOwnerProfile"
+                );
+
+
+            closeButton?.addEventListener(
+                "click",
+                () => {
+
+                    panel.classList.remove(
+                        "is-open"
+                    );
+
+                    document.body.classList.remove(
+                        "modal-open"
+                    );
+                }
+            );
+
+
+            panel.addEventListener(
+                "click",
+                (event) => {
+
+                    if (
+                        event.target ===
+                        panel
+                    ) {
+
+                        panel.classList.remove(
+                            "is-open"
+                        );
+
+                        document.body.classList.remove(
+                            "modal-open"
+                        );
+                    }
+                },
+                {
+                    once: true
+                }
+            );
+
+
+            const viewMoreButton =
+                panel.querySelector(
+                    "#ownerViewMoreBtn"
+                );
+
+
+            viewMoreButton?.addEventListener(
+                "click",
+                () => {
+
+                    const query =
+                        ownerId != null
+
+                            ? `ownerId=${encodeURIComponent(
+                                ownerId
+                            )}`
+
+                            : `ownerName=${encodeURIComponent(
+                                conversation.ownerName ||
+                                ""
+                            )}`;
+
+
+                    window.location.href =
+                        `owner-properties.html?${query}`;
+                }
+            );
+        }
+
+
+        /* =========================================
+           OWNER PROFILE BUTTON
+        ========================================= */
+
+        ownerProfileBtn?.addEventListener(
+            "click",
+            openOwnerProfile
+        );
+
+
+        /* =========================================
+           CLICK OWNER HEADER
+        ========================================= */
+
+        document
+            .querySelector(
+                ".chat-person"
+            )
+            ?.addEventListener(
+                "click",
+                (event) => {
+
+                    if (
+                        !event.target.closest(
+                            "button"
+                        )
+                    ) {
+
+                        openOwnerProfile();
+                    }
+                }
+            );
+
+
+        /* =========================================
+           CALL OWNER
+        ========================================= */
+
+        callBtn?.addEventListener(
+            "click",
+            () => {
+
+                const conversation =
+                    activeConversation();
+
+                const phone =
+                    conversation?.ownerPhone;
+
+
+                if (phone) {
+
+                    const cleanPhone =
+                        String(
+                            phone
+                        ).replace(
+                            /\D/g,
+                            ""
+                        );
+
+
+                    const internationalPhone =
+                        cleanPhone.startsWith(
+                            "0"
+                        )
+                            ? "+234" +
+                              cleanPhone.slice(1)
+                            : "+" +
+                              cleanPhone;
+
+
+                    window.location.href =
+                        `tel:${internationalPhone}`;
+
+                } else {
+
+                    if (
+                        typeof window.leaseHubToast ===
+                        "function"
+                    ) {
+
+                        window.leaseHubToast(
+                            "Calling is available after the owner shares a contact number.",
+                            "info"
+                        );
+
+                    } else {
+
+                        alert(
+                            "Calling is available after the owner shares a contact number."
+                        );
+                    }
+                }
+            }
+        );
+
+
+        /* =========================================
+           VIDEO CALL
+        ========================================= */
+
+        videoBtn?.addEventListener(
+            "click",
+            () => {
+
+                const message =
+                    "Video calling is not connected yet. It will be enabled with the real-time backend.";
+
+
+                if (
+                    typeof window.leaseHubToast ===
+                    "function"
+                ) {
+
+                    window.leaseHubToast(
+                        message,
+                        "info"
+                    );
+
+                } else {
+
+                    alert(message);
+                }
+            }
+        );
+
+    }
+);

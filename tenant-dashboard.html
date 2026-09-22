@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Tenant Dashboard — LeaseHub</title>
+<meta name="description" content="Track saved properties, viewings and rental applications from your LeaseHub tenant dashboard.">
+
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+
+</head>
+
+
+<body>
+
+<header class="navbar">
+
+    <a
+        href="index.html"
+        class="logo"
+    >
+        <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="properties.html">
+            Find a Property
+        </a>
+
+        <a href="apply.html">
+            My Applications
+        </a>
+
+        <a href="messages.html">
+            Messages
+        </a>
+
+    </nav>
+
+
+    <div class="dashboard-user">
+
+        <span id="dashboardUserName">
+            User
+        </span>
+
+        <button
+            id="logoutBtn"
+            class="logout-btn"
+        >
+            Log out
+        </button>
+
+    </div>
+
+    <button class="menu-btn" type="button" aria-label="Open navigation" aria-expanded="false"><i class="bx bx-menu" aria-hidden="true"></i></button>
+
+</header>
+
+
+<main class="dashboard">
+
+    <!-- WELCOME -->
+
+    <section class="dashboard-welcome">
+
+        <div>
+
+            <span class="section-label">
+                TENANT DASHBOARD
+            </span>
+
+            <h1 id="welcomeName">
+                Welcome back.
+            </h1>
+
+            <p>
+                Manage your property search,
+                viewings and applications.
+            </p>
+
+        </div>
+
+
+        <a
+            href="properties.html"
+            class="primary-btn"
+        >
+            + Find a Property
+        </a>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="dashboard-stats">
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                <i class="bx bx-heart" aria-hidden="true"></i>
+            </span>
+
+            <div>
+
+                <strong id="savedCount">
+                    0
+                </strong>
+
+                <p>
+                    Saved properties
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                <i class="bx bx-calendar" aria-hidden="true"></i>
+            </span>
+
+            <div>
+
+                <strong id="viewingCount">
+                    0
+                </strong>
+
+                <p>
+                    Viewing requests
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                <i class="bx bx-edit-alt" aria-hidden="true"></i>
+            </span>
+
+            <div>
+
+                <strong id="applicationCount">
+                    0
+                </strong>
+
+                <p>
+                    Applications
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                <i class="bx bx-message-rounded" aria-hidden="true"></i>
+            </span>
+
+            <div>
+
+                <strong>
+                    0
+                </strong>
+
+                <p>
+                    Unread messages
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <section class="dashboard-section">
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <h2>
+                    Quick actions
+                </h2>
+
+                <p>
+                    Get things done faster.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+            <a
+                href="properties.html"
+                class="quick-action"
+            >
+
+                <span>
+                    <i class="bx bx-search" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Find a property
+                    </strong>
+
+                    <p>
+                        Search available homes
+                        and spaces.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="properties.html"
+                class="quick-action"
+            >
+
+                <span>
+                    <i class="bx bx-heart" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Saved properties
+                    </strong>
+
+                    <p>
+                        View properties you've
+                        saved.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="viewing-requests.html"
+                class="quick-action"
+            >
+
+                <span>
+                    <i class="bx bx-calendar" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        My viewings
+                    </strong>
+
+                    <p>
+                        Manage your viewing
+                        requests.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="messages.html"
+                class="quick-action"
+            >
+
+                <span>
+                    <i class="bx bx-message-rounded" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Messages
+                    </strong>
+
+                    <p>
+                        Chat with property owners.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- SAVED PROPERTIES -->
+
+    <section class="dashboard-section">
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <h2>
+                    Saved properties
+                </h2>
+
+                <p>
+                    Properties you've saved for later.
+                </p>
+
+            </div>
+
+
+            <a href="properties.html">
+                Browse all →
+            </a>
+
+        </div>
+
+
+        <div
+            id="savedProperties"
+            class="property-grid dashboard-property-grid"
+        >
+
+        </div>
+
+
+        <div
+            id="emptySaved"
+            class="dashboard-empty"
+        >
+
+            <div>
+                <i class="bx bx-heart" aria-hidden="true"></i>
+            </div>
+
+            <h3>
+                No saved properties yet
+            </h3>
+
+            <p>
+                When you find a property you like,
+                save it here.
+            </p>
+
+            <a
+                href="properties.html"
+                class="primary-btn"
+            >
+                Browse Properties
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- UPCOMING VIEWINGS -->
+
+    <section class="dashboard-section">
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <h2>
+                    Viewing requests
+                </h2>
+
+                <p>
+                    Keep track of your property viewings.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="viewingRequests"
+            class="viewing-list"
+        >
+
+        </div>
+
+
+        <div
+            id="emptyViewings"
+            class="dashboard-empty small-empty"
+        >
+
+            <div>
+                <i class="bx bx-calendar" aria-hidden="true"></i>
+            </div>
+
+            <h3>
+                No viewing requests
+            </h3>
+
+            <p>
+                Request a viewing from any property
+                you're interested in.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="dashboard-section" id="tenantApplications">
+        <div class="dashboard-section-heading">
+            <div>
+                <h2>Application status</h2>
+                <p>Track your rental applications from submission to decision.</p>
+            </div>
+        </div>
+        <div id="tenantApplicationList" class="viewing-list"></div>
+        <div id="emptyTenantApplications" class="dashboard-empty small-empty" hidden>
+            <div><i class="bx bx-file"></i></div>
+            <h3>No applications yet</h3>
+            <p>Applications you submit will appear here.</p>
+            <a href="properties.html" class="primary-btn">Find a property</a>
+        </div>
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 LeaseHub
+        </span>
+
+        <span>
+            Built for Nigeria Nigeria
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script src="JS/data.js"></script>
+<script src="JS/app.js"></script>
+<script src="JS/viewing-requests.js"></script>
+<script src="JS/tenant-status.js"></script>
+<script src="JS/leasehub-polish.js"></script>
+
+</body>
+
+</html>

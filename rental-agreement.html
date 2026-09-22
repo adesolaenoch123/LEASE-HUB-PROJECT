@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Rental Agreement — LeaseHub</title>
+<meta name="description" content="Review your LeaseHub frontend rental agreement and agreement status.">
+
+    <link
+        rel="stylesheet"
+        href="CSS/style.css"
+    >
+
+<link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+
+<body>
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+        <img
+            src="IMAGES/Lease Hub logo.png"
+            alt="Lease Hub"
+        >
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="properties.html">
+            Marketplace
+        </a>
+
+        <a href="owner-dashboard.html">
+            Dashboard
+        </a>
+
+    </nav>
+
+</header>
+
+
+<main class="dashboard agreement-page">
+
+    <section class="dashboard-welcome">
+
+        <div>
+
+            <span class="section-label">
+                LEASEHUB AGREEMENT
+            </span>
+
+            <h1>
+                Rental Agreement
+            </h1>
+
+            <p id="agreementSubtitle">
+                Review the rental agreement for this property.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <section class="dashboard-section">
+
+        <div
+            id="agreementStatus"
+            class="agreement-status"
+        >
+            Agreement generated
+        </div>
+
+
+        <div
+            id="agreementDocument"
+            class="agreement-document"
+        >
+
+            <div class="agreement-header">
+
+                <div>
+
+                    <span class="section-label">
+                        LEASEHUB
+                    </span>
+
+                    <h2>
+                        RENTAL AGREEMENT
+                    </h2>
+
+                </div>
+
+                <div id="agreementDate">
+                    —
+                </div>
+
+            </div>
+
+
+            <div id="agreementContent">
+
+                <p>
+                    Loading agreement...
+                </p>
+
+            </div>
+
+
+            <div class="agreement-signatures">
+
+                <div class="signature-box">
+
+                    <h4>
+                        Property Owner
+                    </h4>
+
+                    <p id="ownerSignature">
+                        —
+                    </p>
+
+                    <div class="signature-line"></div>
+
+                    <small>
+                        Owner
+                    </small>
+
+                </div>
+
+
+                <div class="signature-box">
+
+                    <h4>
+                        Tenant
+                    </h4>
+
+                    <p id="tenantSignature">
+                        —
+                    </p>
+
+                    <div class="signature-line"></div>
+
+                    <small>
+                        Tenant
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="agreement-actions">
+
+            <button
+                type="button"
+                class="primary-btn"
+                id="ownerAgreeBtn"
+            >
+                Owner Agrees
+            </button>
+
+
+            <button
+                type="button"
+                class="primary-btn"
+                id="tenantAgreeBtn"
+            >
+                Tenant Agrees
+            </button>
+
+        </div>
+
+
+        <div
+            id="agreementFinalStatus"
+            class="agreement-final-status"
+        >
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 LeaseHub
+        </span>
+
+        <span>
+            Built for Nigeria Nigeria
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script src="JS/data.js"></script>
+<script src="JS/app.js"></script>
+<script src="JS/rental-agreement.js"></script>
+
+<script src="JS/leasehub-polish.js"></script>
+</body>
+
+</html>

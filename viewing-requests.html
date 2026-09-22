@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Viewing Requests — LeaseHub</title>
+<meta name="description" content="Manage LeaseHub property viewing requests.">
+
+    <link rel="stylesheet" href="CSS/style.css">
+
+    <style>
+        .requests-page {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .requests-header {
+            margin-bottom: 35px;
+        }
+
+        .requests-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .requests-header p {
+            color: #666;
+        }
+
+        .requests-list {
+            display: grid;
+            gap: 20px;
+        }
+
+        .request-card {
+            background: #fff;
+            border: 1px solid #e5e5e5;
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            justify-content: space-between;
+            gap: 25px;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .request-info h2 {
+            margin: 0 0 8px;
+            font-size: 22px;
+        }
+
+        .request-location {
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .request-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            color: #444;
+        }
+
+        .request-status {
+            min-width: 120px;
+            text-align: center;
+            padding: 10px 15px;
+            border-radius: 30px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff4cc;
+            color: #8a6500;
+        }
+
+        .status-accepted {
+            background: #dff7e5;
+            color: #16733a;
+        }
+
+        .status-declined {
+            background: #ffe1e1;
+            color: #a52323;
+        }
+
+        .empty-requests {
+            text-align: center;
+            padding: 70px 20px;
+            background: #fff;
+            border: 1px dashed #ccc;
+            border-radius: 16px;
+        }
+
+        .empty-requests h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty-requests p {
+            color: #666;
+            margin-bottom: 25px;
+        }
+
+        .request-property-btn {
+            display: inline-block;
+            text-decoration: none;
+        }
+
+        @media (max-width: 700px) {
+
+            .requests-header h1 {
+                font-size: 28px;
+            }
+
+            .request-card {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .request-status {
+                width: 100%;
+            }
+
+        }
+    </style>
+<link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+
+<body>
+
+    <!-- NAVBAR -->
+
+    <header class="navbar">
+
+        <a href="index.html" class="logo">
+            <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="properties.html">
+                Rent
+            </a>
+
+            <a href="shortlets.html">
+                Shortlets
+            </a>
+
+            <a href="commercial.html">
+                Commercial
+            </a>
+
+            <a href="viewing-requests.html">
+                My Viewings
+            </a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            <a href="login.html" class="login-btn">
+                Log in
+            </a>
+
+            <a href="register.html" class="owner-btn">
+                List a Property
+            </a>
+
+        </div>
+
+        <button class="menu-btn" aria-label="Open navigation">
+            ☰
+        </button>
+
+    </header>
+
+
+    <!-- MAIN -->
+
+    <main class="requests-page">
+
+        <div class="requests-header">
+
+            <span class="section-label">
+                TENANT DASHBOARD
+            </span>
+
+            <h1>
+                My Viewing Requests
+            </h1>
+
+            <p>
+                Keep track of your property viewing requests
+                and their current status.
+            </p>
+
+        </div>
+
+
+        <div
+            id="viewingRequests"
+            class="requests-list"
+        >
+
+            <!-- Requests will appear here -->
+
+        </div>
+
+    </main>
+
+
+    <!-- FOOTER -->
+
+    <footer>
+
+        <div class="footer-main">
+
+            <div>
+
+                <a href="index.html" class="logo">
+                    <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+                </a>
+
+                <p>
+                    Find your place without the unnecessary
+                    agent fees.
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 LeaseHub
+            </span>
+
+            <span>
+                Built for Nigeria Nigeria
+            </span>
+
+        </div>
+
+    </footer>
+
+
+    <script src="JS/data.js"></script>
+    <script src="JS/app.js"></script>
+    <script src="JS/viewing-requests.js"></script>
+
+<script src="JS/leasehub-polish.js"></script>
+</body>
+
+</html>

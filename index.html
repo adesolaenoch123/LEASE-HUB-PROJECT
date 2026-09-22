@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LeaseHub — Find Your Place</title>
+<meta name="description" content="LeaseHub connects tenants with property owners while helping people discover homes, shortlets, student housing, hotels and commercial spaces across Nigeria.">
+
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <a href="index.html" class="logo">
+            <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+        </a>
+
+        <nav class="nav-links">
+            <a href="properties.html">Rent</a>
+            <a href="shortlets.html">Shortlets</a>
+            <a href="commercial.html">Commercial</a>
+        <a href="student-housing.html">Student Housing</a>
+        <a href="hotels.html">Hotels & Lodges</a>
+        <a href="saved.html">Saved</a>
+        <a href="compare.html">Compare</a>
+            <a href="index.html#how-it-works">How It Works</a>
+        </nav>
+
+        <div class="nav-actions">
+            <a href="login.html" class="login-btn">Log in</a>
+
+            <a href="register.html" class="owner-btn">
+                List a Property
+            </a>
+        </div>
+
+        <button class="menu-btn" id="menuBtn" type="button" aria-label="Open navigation" aria-expanded="false"><i class="bx bx-menu" aria-hidden="true"></i></button>
+
+    </header>
+
+
+    <!-- ================= HERO ================= -->
+
+    <main>
+
+        <section class="hero">
+
+            <video
+                class="hero-video"
+                autoplay
+                muted
+                loop
+                playsinline
+                aria-hidden="true"
+            >
+                <source
+                    src="7578541-uhd_3840_2160_30fps.mp4"
+                    type="video/mp4"
+                >
+            </video>
+
+            <div class="hero-content">
+
+                <div class="hero-badge">
+                    Nigeria Built for Nigeria
+                </div>
+
+                <h1>
+                    Find your place.
+                    <span>Skip the unnecessary stress.</span>
+                </h1>
+
+                <p>
+                    LeaseHub connects you directly with property owners
+                    while helping you discover verified homes, shortlets
+                    and commercial spaces.
+                </p>
+
+
+                <!-- SEARCH BOX -->
+
+                <div class="search-box">
+
+                    <div class="search-field">
+
+                        <span></span>
+
+                        <div>
+                            <small>Location</small>
+
+                            <input
+                                type="text"
+                                id="locationSearch"
+                                placeholder="Lagos, Abuja, Port Harcourt..."
+                            >
+                        </div>
+
+                    </div>
+
+
+                    <div class="search-field">
+
+                        <span></span>
+
+                        <div>
+
+                            <small>Property type</small>
+
+                            <select id="propertyType">
+
+                                <option value="all">
+                                    Any property
+                                </option>
+
+                                <option value="Apartment">
+                                    Apartment
+                                </option>
+
+                                <option value="Studio Apartment">
+                                    Studio Apartment
+                                </option>
+
+                                <option value="House">
+                                    House
+                                </option>
+
+                                <option value="Duplex">
+                                    Duplex
+                                </option>
+
+                                <option value="Shortlet">
+                                    Shortlet
+                                </option>
+
+                                <option value="Office">
+                                    Office Space
+                                </option>
+
+                                <option value="Shop">
+                                    Shop
+                                </option>
+
+                                <option value="Land">
+                                    Land
+                                </option>
+
+                                <option value="Hotel & lounge">
+                                    Hotel & lounge  
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="search-field">
+
+                        <span></span>
+
+                        <div>
+
+                            <small>Budget</small>
+
+                            <select id="budget">
+
+                                <option value="all">
+                                    Any budget
+                                </option>
+
+                                <option value="1000000">
+                                    Under ₦1m
+                                </option>
+
+                                <option value="3000000">
+                                    Under ₦3m
+                                </option>
+
+                                <option value="5000000">
+                                    Under ₦5m
+                                </option>
+
+                                <option value="10000000">
+                                    Under ₦10m
+                                </option>
+
+                                
+                                <option value="100000000">
+                                    Above ₦10m
+                                </option>
+
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+
+                    <button
+                        class="search-btn"
+                        id="searchBtn"
+                    >
+                        Search
+                    </button>
+
+                </div>
+
+
+                <!-- AI SEARCH -->
+
+                <button class="ai-search-btn" id="aiSearchBtn">
+                    ✨ Try AI Property Search
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= TRUST BAR ================= -->
+
+        <section class="trust-section">
+
+            <div class="trust-item">
+                <strong><i class="bx bx-shield" aria-hidden="true"></i> Verified</strong>
+                <span>Property verification</span>
+            </div>
+
+            <div class="trust-item">
+                <strong> Direct</strong>
+                <span>Connect with owners</span>
+            </div>
+
+            <div class="trust-item">
+                <strong>Fair</strong>
+                <span>Transparent fees</span>
+            </div>
+
+            <div class="trust-item">
+                <strong>Nigeria Nationwide</strong>
+                <span>Properties across Nigeria</span>
+            </div>
+
+        </section>
+
+
+        <!-- ================= LOCATION MAP ================= -->
+
+        <section class="location-section">
+
+            <div class="location-heading">
+                <div>
+                    <span class="section-label">EXPLORE LOCATIONS</span>
+                    <h2>Find properties near you.</h2>
+                    <p>Search a city or neighbourhood to explore LeaseHub locations.</p>
+                </div>
+
+                <form class="location-search" id="locationMapForm">
+                    <input
+                        id="locationMapInput"
+                        type="search"
+                        placeholder="Search Lagos, Abuja, Lekki..."
+                        autocomplete="off"
+                    >
+                    <button type="submit">Search</button>
+                    <button class="location-button" id="useMyLocation" type="button" title="Use my current location" aria-label="Use my current location"><i class="bx bx-map-alt" aria-hidden="true"></i></button>
+                </form>
+            </div>
+
+            <div class="landing-map-wrap">
+                <div class="landing-map" id="landingMap" aria-label="LeaseHub property locations map"></div>
+                <p class="map-status" id="locationMapStatus" aria-live="polite">Showing LeaseHub locations across Nigeria.</p>
+            </div>
+
+        </section>
+
+        <section class="stats-section" aria-label="LeaseHub marketplace statistics">
+            <div class="stat-item">
+                <strong class="stat-number" data-stat="properties">0</strong>
+                <span>Available properties</span>
+            </div>
+            <div class="stat-item">
+                <strong class="stat-number" data-stat="verified">0</strong>
+                <span>Verified listings</span>
+            </div>
+            <div class="stat-item">
+                <strong class="stat-number" data-stat="cities">0</strong>
+                <span>Cities covered</span>
+            </div>
+            <div class="stat-item">
+                <strong class="stat-number" data-stat="direct">100%</strong>
+                <span>Direct connections</span>
+            </div>
+        </section>
+
+
+        <!-- ================= FEATURED ================= -->
+
+        <section class="section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        EXPLORE
+                    </span>
+
+                    <h2>
+                        Featured properties
+                    </h2>
+
+                    <p>
+                        Discover properties selected from our marketplace.
+                    </p>
+
+                </div>
+
+                <a href="properties.html" class="view-all">
+                    View all →
+                </a>
+
+            </div>
+
+
+            <div
+                class="property-grid"
+                id="featuredProperties"
+            >
+            </div>
+
+        </section>
+
+
+        <!-- ================= CATEGORIES ================= -->
+
+        <section class="section categories-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <span class="section-label">
+                        FIND YOUR SPACE
+                    </span>
+
+                    <h2>
+                        Explore by category
+                    </h2>
+
+                </div>
+
+            </div>
+
+
+            <div class="category-grid">
+
+                <a href="properties.html" class="category-card">
+                    <div class="category-icon"><i class="bx bx-building-house" aria-hidden="true"></i></div>
+                    <h3>Homes</h3>
+                    <p>Find apartments, houses and duplexes.</p>
+                </a>
+
+                <a href="shortlets.html" class="category-card">
+                    <div class="category-icon"><i class="bx bx-bed" aria-hidden="true"></i></div>
+                    <h3>Shortlets</h3>
+                    <p>Flexible stays for days, weeks or months.</p>
+                </a>
+
+                <a href="commercial.html" class="category-card">
+                    <div class="category-icon"><i class="bx bx-briefcase" aria-hidden="true"></i></div>
+                    <h3>Commercial</h3>
+                    <p>Offices, shops, warehouses and more.</p>
+                </a>
+
+                <a href="properties.html" class="category-card">
+                    <div class="category-icon"><i class="bx bx-landscape" aria-hidden="true"></i></div>
+                    <h3>Land</h3>
+                    <p>Discover land opportunities across Nigeria.</p>
+                </a>
+
+                     <a href="hotels.html" class="category-card">
+                    <div class="category-icon"><i class="bx bx-hotel" aria-hidden="true"></i></div>
+                    <h3>Hotels & Lodges</h3>
+                    <p>Find rooms and stays for your next trip.</p>
+                </a>
+
+                <a href="student-housing.html" class="category-card">
+                    <div class="category-icon"><i class="bx bx-university" aria-hidden="true"></i></div>
+                    <h3>Student Housing</h3>
+                    <p>Find accommodation close to your university.</p>
+                </a>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= HOW IT WORKS ================= -->
+
+        <section class="how-section" id="how-it-works">
+
+            <div class="section-heading centered">
+
+                <span class="section-label">
+                    HOW LEASEHUB WORKS
+                </span>
+
+                <h5>
+                    We make finding and renting property simpler, safer and more transparent.
+                </h5>
+
+            </div>
+
+
+            <div class="steps">
+
+                <div class="step">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <h3>
+                        Search
+                    </h3>
+
+                    <p>
+                        Find properties using normal filters
+                        or our AI-powered search.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <h3>
+                        Connect
+                    </h3>
+
+                    <p>
+                        Chat with property owners and
+                        schedule a viewing.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <h3>
+                        Verify
+                    </h3>
+
+                    <p>
+                        Check verification information before
+                        moving forward.
+                    </p>
+
+                </div>
+
+
+                <div class="step">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <h3>
+                        Move in
+                    </h3>
+
+                    <p>
+                        Complete the rental process through
+                        LeaseHub.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ================= OWNER CTA ================= -->
+
+        <section class="owner-section">
+
+            <div>
+
+                <span class="section-label">
+                    PROPERTY OWNERS
+                </span>
+
+                <h2>
+                    Have a property to rent?
+                </h2>
+
+                <p>
+                    List your property on LeaseHub and connect
+                    with potential tenants directly.
+                </p>
+
+                <a href="register.html" class="primary-btn">
+                    List Your Property →
+                </a>
+
+            </div>
+
+            <div class="owner-icon">
+                
+            </div>
+
+        </section>
+
+
+        <!-- ================= AI SECTION ================= -->
+
+        <section class="ai-section">
+
+            <div class="ai-content">
+
+                <span class="section-label">
+                     SMART SEARCH
+                </span>
+
+                <h2>
+                    Tell LeaseHub what you're looking for.
+                </h2>
+
+                <p>
+                    You don't need to know exactly what filters
+                    to use. Describe your ideal property naturally
+                    and LeaseHub can help find relevant matches.
+                </p>
+
+                <button
+                    class="primary-btn"
+                    id="aiSearchBtn2"
+                >
+                    Try AI Search →
+                </button>
+
+            </div>
+
+            <div class="ai-example">
+
+                <div class="chat-bubble user">
+                    I need a 2-bedroom apartment in Lagos
+                    under ₦3m near good transport.
+                </div>
+
+                <div class="chat-bubble ai">
+                    ✨ Got it. I'll look for properties
+                    matching those preferences.
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        <div class="footer-main">
+
+            <div>
+
+                <a href="index.html" class="logo">
+                    <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+                </a>
+
+                <p>
+                    Find your place without the unnecessary
+                    agent fees.
+                </p>
+
+            </div>
+
+
+            <div class="footer-links">
+
+                <div>
+                    <h4>Explore</h4>
+                    <a href="properties.html">Properties</a>
+                    <a href="shortlets.html">Shortlets</a>
+                    <a href="commercial.html">Commercial</a>
+        <a href="student-housing.html">Student Housing</a>
+        <a href="hotels.html">Hotels & Lodges</a>
+        <a href="saved.html">Saved</a>
+        <a href="compare.html">Compare</a>
+                </div>
+
+                <div>
+                    <h4>LeaseHub</h4>
+                    <a href="index.html#how-it-works">How it works</a>
+                    <a href="verification.html">Safety</a>
+                    <a href="index.html">About us</a>
+                </div>
+
+                <div>
+                    <h4>Account</h4>
+                    <a href="login.html">Log in</a>
+                    <a href="register.html">Create account</a>
+                    <a href="register.html">List a property</a>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="footer-bottom">
+
+            <span>
+                © 2026 LeaseHub. All rights reserved.
+            </span>
+
+            <span>
+                Built for Nigeria Nigeria
+            </span>
+
+        </div>
+
+    </footer>
+
+    <section class="assistant-panel" id="assistantPanel" aria-label="LeaseHub AI assistant" aria-hidden="true">
+        <div class="assistant-header">
+            <div>
+                <strong>LeaseHub Assistant</strong>
+                <span>Here to help you find a place</span>
+            </div>
+            <button class="assistant-close" id="assistantClose" type="button" aria-label="Close assistant"><i class="bx bx-x" aria-hidden="true"></i></button>
+        </div>
+
+        <div class="assistant-messages" id="assistantMessages" aria-live="polite">
+            <div class="assistant-message assistant-message-ai">
+                Tell me what you need, such as “a 2-bedroom apartment in Lagos under ₦3m”.
+            </div>
+        </div>
+
+        <div class="assistant-suggestions">
+            <button type="button" data-assistant-prompt="Show me apartments in Lagos">Apartments in Lagos</button>
+            <button type="button" data-assistant-prompt="Show me homes under ₦5m">Homes under ₦5m</button>
+        </div>
+
+        <form class="assistant-form" id="assistantForm">
+            <input id="assistantInput" type="text" placeholder="Ask me anything..." autocomplete="off">
+            <button type="submit" aria-label="Send message">→</button>
+        </form>
+    </section>
+
+    <button class="assistant-launcher" id="assistantLauncher" type="button" aria-label="Open LeaseHub AI assistant" aria-expanded="false">
+        <span>✦</span>
+    </button>
+
+
+    <script src="JS/data.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="JS/app.js"></script>
+
+    <script src="JS/cms-public.js"></script>
+
+<script src="JS/leasehub-polish.js"></script>
+</body>
+</html>

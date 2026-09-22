@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Apply for Property — LeaseHub</title>
+<meta name="description" content="Apply for a LeaseHub rental property and send your application to the property owner.">
+
+    <link
+        rel="stylesheet"
+        href="CSS/style.css"
+    >
+
+<link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+
+<body data-leasehub-page="apply">
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+            <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+    </a>
+
+    <a
+        href="properties.html"
+        class="back-link"
+    >
+        ← Back to properties
+    </a>
+
+</header>
+
+
+<main class="application-page">
+
+    <div class="application-header">
+
+        <span class="section-label">
+            PROPERTY APPLICATION
+        </span>
+
+        <h1>
+            Apply for this property.
+        </h1>
+
+        <p>
+            Tell the owner a little about yourself
+            and your rental requirements.
+        </p>
+
+    </div>
+
+
+    <!-- PROPERTY SUMMARY -->
+
+    <section
+        id="applicationProperty"
+        class="application-property"
+    >
+
+        Loading property...
+
+    </section>
+
+
+    <!-- APPLICATION FORM -->
+
+    <form
+        id="applicationForm"
+        class="application-form"
+    >
+
+        <!-- PERSONAL INFORMATION -->
+
+        <section class="form-section">
+
+            <div class="form-section-heading">
+
+                <span>01</span>
+
+                <div>
+
+                    <h2>
+                        Personal information
+                    </h2>
+
+                    <p>
+                        Basic information about you.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <label>
+
+                    Full name
+
+                    <input
+                        type="text"
+                        id="applicantName"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Email
+
+                    <input
+                        type="email"
+                        id="applicantEmail"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Phone number
+
+                    <input
+                        type="tel"
+                        id="applicantPhone"
+                        placeholder="08012345678"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Number of occupants
+
+                    <input
+                        type="number"
+                        id="occupants"
+                        min="1"
+                        value="1"
+                        required
+                    >
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- RENTAL INFORMATION -->
+
+        <section class="form-section">
+
+            <div class="form-section-heading">
+
+                <span>02</span>
+
+                <div>
+
+                    <h2>
+                        Rental information
+                    </h2>
+
+                    <p>
+                        Tell the owner what you're looking for.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <label>
+
+                    Preferred move-in date
+
+                    <input
+                        type="date"
+                        id="moveInDate"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Length of stay
+
+                    <select
+                        id="stayLength"
+                        required
+                    >
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option>
+                            6 months
+                        </option>
+
+                        <option>
+                            1 year
+                        </option>
+
+                        <option>
+                            2 years
+                        </option>
+
+                        <option>
+                            3+ years
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    Employment status
+
+                    <select
+                        id="employmentStatus"
+                        required
+                    >
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option>
+                            Employed
+                        </option>
+
+                        <option>
+                            Self-employed
+                        </option>
+
+                        <option>
+                            Student
+                        </option>
+
+                        <option>
+                            Business owner
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    Monthly income range
+
+                    <select
+                        id="incomeRange"
+                        required
+                    >
+
+                        <option value="">
+                            Select
+                        </option>
+
+                        <option>
+                            Below ₦100,000
+                        </option>
+
+                        <option>
+                            ₦100,000 – ₦250,000
+                        </option>
+
+                        <option>
+                            ₦250,000 – ₦500,000
+                        </option>
+
+                        <option>
+                            ₦500,000 – ₦1,000,000
+                        </option>
+
+                        <option>
+                            Above ₦1,000,000
+                        </option>
+
+                    </select>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- MESSAGE -->
+
+        <section class="form-section">
+
+            <div class="form-section-heading">
+
+                <span>03</span>
+
+                <div>
+
+                    <h2>
+                        Message to owner
+                    </h2>
+
+                    <p>
+                        Introduce yourself to the property owner.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <label class="full-field">
+
+                Your message
+
+                <textarea
+                    id="applicationMessage"
+                    rows="7"
+                    placeholder="Tell the owner why you're interested in the property..."
+                    required
+                ></textarea>
+
+            </label>
+
+        </section>
+
+
+        <!-- PRIVACY -->
+
+        <section class="application-notice">
+
+            <div>
+                <i class="bx bx-lock" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    Your information is protected
+                </strong>
+
+                <p>
+                    Your application is shared with the
+                    property owner through LeaseHub.
+                    Personal attachApplicationActions()details remain protected
+                    until both parties agree to communicate
+                    directly.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <div class="form-submit">
+
+            <a
+                href="properties.html"
+                class="cancel-btn"
+            >
+                Cancel
+            </a>
+
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                Submit Application
+            </button>
+
+        </div>
+
+    </form>
+
+</main>
+
+
+<script src="JS/data.js"></script>
+<script src="JS/app.js"></script>
+<script src="JS/rental-applications.js"></script>
+
+<script src="JS/leasehub-polish.js"></script>
+
+<footer class="site-footer leasehub-standard-footer"><div class="footer-bottom"><span>© 2026 LeaseHub. All rights reserved.</span><span>Built for Nigeria</span></div></footer>
+</body>
+
+</html>

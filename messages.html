@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Messages — LeaseHub</title>
+<meta name="description" content="Chat with property owners through LeaseHub.">
+
+    <link
+        rel="stylesheet"
+        href="CSS/style.css"
+    >
+
+    <style>
+
+        :root {
+            --lh-green: #008753;
+            --lh-green-dark: #006b42;
+            --lh-green-light: #eaf7f1;
+            --lh-black: #111827;
+            --lh-gray: #667085;
+            --lh-light-gray: #f5f7f8;
+            --lh-border: #e4e7ec;
+            --lh-white: #ffffff;
+        }
+
+        /* Tenant profile drawer */
+        .tenant-profile-drawer {
+            position: fixed;
+            top: 0;
+            right: -420px;
+            width: 400px;
+            max-width: 90%;
+            height: 100vh;
+            background: #ffffff;
+            z-index: 9999;
+            box-shadow: -10px 0 40px rgba(0,0,0,0.15);
+            transition: right 0.3s ease;
+            overflow-y: auto;
+        }
+
+        .tenant-profile-drawer.open {
+            right: 0;
+        }
+
+        .drawer-open {
+            overflow: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        body {
+            margin: 0;
+            background: #f6f8f7;
+            color: var(--lh-black);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+
+        /* ==============================
+           TOP NAVBAR
+        ============================== */
+
+        .messages-topbar {
+            height: 100px;
+            background: #004d35;
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            gap: 30px;
+            color: white;
+        }
+
+
+        .messages-logo {
+            display: inline-flex;
+            align-items: center;
+            width: 96px;
+            height: 96px;
+            text-decoration: none;
+            flex-shrink: 0;
+        }
+
+        .messages-logo img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+
+        .conversation-search {
+            flex: 1;
+            max-width: 650px;
+            margin: auto;
+            position: relative;
+        }
+
+
+        .conversation-search input {
+            width: 100%;
+            height: 46px;
+            border: none;
+            outline: none;
+            border-radius: 10px;
+            background: #003c2a;
+            color: white;
+            padding: 0 18px 0 45px;
+            font-size: 15px;
+        }
+
+
+        .conversation-search input::placeholder {
+            color: #a9c6bb;
+        }
+
+
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            top: 13px;
+            font-size: 18px;
+        }
+
+
+        .top-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            min-width: 150px;
+        }
+
+
+        .top-profile-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #d8dedb;
+        }
+
+
+        .top-profile-info strong {
+            display: block;
+            font-size: 15px;
+        }
+
+
+        .top-profile-info span {
+            font-size: 12px;
+            color: #a9c6bb;
+        }
+
+
+        /* ==============================
+           MAIN LAYOUT
+        ============================== */
+
+        .messages-shell {
+            height: calc(100vh - 76px);
+            display: grid;
+            grid-template-columns: 330px 1fr;
+            max-width: 1600px;
+            margin: 0 auto;
+            background: white;
+        }
+
+
+        /* ==============================
+           SIDEBAR
+        ============================== */
+
+        .messages-sidebar {
+            border-right: 1px solid var(--lh-border);
+            display: flex;
+            flex-direction: column;
+            background: white;
+            min-height: 0;
+        }
+
+
+        .sidebar-header {
+            padding: 28px 22px 18px;
+        }
+
+
+        .sidebar-header small {
+            color: var(--lh-green);
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: 11px;
+        }
+
+
+        .sidebar-header h1 {
+            margin: 6px 0 18px;
+            font-size: 26px;
+        }
+
+
+        .message-filters {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+
+        .message-filter {
+            border: 1px solid var(--lh-border);
+            background: white;
+            padding: 8px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+
+        .message-filter.active {
+            background: var(--lh-green-light);
+            border-color: #c9eadb;
+            color: var(--lh-green-dark);
+            font-weight: 700;
+        }
+
+
+        .conversation-list {
+            flex: 1;
+            overflow-y: auto;
+            min-height: 0;
+        }
+
+
+        .conversation-item {
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            border-left: 3px solid transparent;
+            border-bottom: 1px solid #f0f1f2;
+            transition: .2s ease;
+        }
+
+
+        .conversation-item:hover {
+            background: #f8faf9;
+        }
+
+
+        .conversation-item.active {
+            background: var(--lh-green-light);
+            border-left-color: var(--lh-green);
+        }
+
+
+        .conversation-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #dfe6e2;
+            flex-shrink: 0;
+        }
+
+
+        .conversation-info {
+            min-width: 0;
+            flex: 1;
+        }
+
+
+        .conversation-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+
+        .conversation-name {
+            font-weight: 700;
+            font-size: 15px;
+        }
+
+
+        .conversation-time {
+            color: var(--lh-gray);
+            font-size: 11px;
+        }
+
+
+        .conversation-property {
+            color: var(--lh-gray);
+            font-size: 12px;
+            margin-top: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        .conversation-preview {
+            color: #475467;
+            font-size: 13px;
+            margin-top: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+
+        .unread-count {
+            min-width: 22px;
+            height: 22px;
+            background: var(--lh-green);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+
+        .messages-empty {
+            padding: 40px 25px;
+            text-align: center;
+            color: var(--lh-gray);
+        }
+
+
+        /* ==============================
+           CHAT
+        ============================== */
+
+        .chat-area {
+            display: flex;
+            min-width: 0;
+            position: relative;
+        }
+
+
+        .chat-empty {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: var(--lh-gray);
+            text-align: center;
+        }
+
+
+        .chat-empty-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--lh-green-light);
+            color: var(--lh-green);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+
+        .chat-empty h2 {
+            color: var(--lh-black);
+            margin-bottom: 5px;
+        }
+
+
+        .chat-content {
+            flex: 1;
+            display: none;
+            flex-direction: column;
+            min-width: 0;
+            min-height: 0;
+        }
+
+
+        .chat-header {
+            min-height: 82px;
+            border-bottom: 1px solid var(--lh-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 25px;
+            background: white;
+        }
+
+
+        .chat-person {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+
+        .chat-person-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #dfe6e2;
+        }
+
+
+        .chat-person-name {
+            font-weight: 800;
+            font-size: 17px;
+        }
+
+
+        .online-status {
+            color: var(--lh-green);
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+
+        .online-dot {
+            width: 8px;
+            height: 8px;
+            background: #18a957;
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+
+
+        .chat-property {
+            color: var(--lh-gray);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+
+
+        .chat-header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+
+        .chat-action {
+            width: 42px;
+            height: 42px;
+            border: 1px solid var(--lh-border);
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+
+        .chat-action:hover {
+            background: var(--lh-green-light);
+        }
+
+
+        /* ==============================
+           PROTECTION
+        ============================== */
+
+        .chat-protection {
+            align-self: center;
+            margin: 12px auto;
+            background: #fff7df;
+            color: #745b00;
+            padding: 9px 16px;
+            border-radius: 8px;
+            font-size: 12px;
+        }
+
+
+        /* ==============================
+           MESSAGES
+        ============================== */
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 25px 35px;
+            background:
+                radial-gradient(
+                    #edf4f0 1px,
+                    transparent 1px
+                );
+            background-size: 20px 20px;
+            min-height: 0;
+        }
+
+
+        .message-row {
+            display: flex;
+            margin-bottom: 16px;
+            align-items: flex-end;
+            gap: 8px;
+        }
+
+
+        .message-row.tenant {
+            justify-content: flex-end;
+        }
+
+
+        .message-row.owner {
+            justify-content: flex-start;
+        }
+
+
+        .message-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            flex-shrink: 0;
+        }
+
+
+        .message-bubble {
+            max-width: min(520px, 70%);
+            padding: 10px 14px 8px;
+            border-radius: 14px;
+            position: relative;
+            box-shadow: 0 1px 2px rgba(0,0,0,.04);
+        }
+
+
+        .message-row.tenant .message-bubble {
+            background: #dcf8c6;
+            border-bottom-right-radius: 4px;
+        }
+
+
+        .message-row.owner .message-bubble {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-bottom-left-radius: 4px;
+        }
+
+
+        .message-role {
+            display: inline-block;
+            background: var(--lh-green-dark);
+            color: white;
+            font-size: 9px;
+            font-weight: 800;
+            padding: 3px 7px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            letter-spacing: .4px;
+        }
+
+
+        .message-text {
+            font-size: 14px;
+            line-height: 1.5;
+            word-wrap: break-word;
+        }
+
+
+        .message-meta {
+            text-align: right;
+            margin-top: 5px;
+            font-size: 10px;
+            color: #667085;
+        }
+
+
+        .message-check {
+            color: #008753;
+            margin-left: 3px;
+        }
+
+
+        /* ==============================
+           MESSAGE FORM
+        ============================== */
+
+        .message-form {
+            min-height: 76px;
+            border-top: 1px solid var(--lh-border);
+            background: white;
+            padding: 14px 22px;
+            display: flex;
+            gap: 10px;
+        }
+
+
+        .message-input {
+            flex: 1;
+            border: 1px solid var(--lh-border);
+            border-radius: 12px;
+            padding: 0 18px;
+            outline: none;
+            font-size: 14px;
+        }
+
+
+        .message-input:focus {
+            border-color: var(--lh-green);
+            box-shadow:
+                0 0 0 3px rgba(
+                    0,
+                    135,
+                    83,
+                    .08
+                );
+        }
+
+
+        .send-message-btn {
+            width: 100px;
+            border: none;
+            border-radius: 10px;
+            background: var(--lh-green);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+
+        .send-message-btn:hover {
+            background: var(--lh-green-dark);
+        }
+
+
+        /* ==============================
+           PROFILE DRAWER
+        ============================== */
+
+        .profile-drawer {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 350px;
+            background: white;
+            box-shadow:
+                -8px 0 30px rgba(0,0,0,.12);
+            z-index: 50;
+            padding: 25px;
+            transform: translateX(105%);
+            transition: transform .3s ease;
+            overflow-y: auto;
+        }
+
+
+        .profile-drawer.open {
+            transform: translateX(0);
+        }
+
+
+        .profile-drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+
+        .profile-drawer-header h2 {
+            margin: 0;
+            font-size: 20px;
+        }
+
+
+        .close-profile {
+            border: none;
+            background: none;
+            font-size: 25px;
+            cursor: pointer;
+        }
+
+
+        .profile-picture-area {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+
+        .profile-picture-wrapper {
+            position: relative;
+            width: 130px;
+            height: 130px;
+            margin: auto;
+        }
+
+
+        .profile-picture {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
+            background: #dfe5e2;
+            border: 5px solid white;
+            box-shadow:
+                0 4px 20px rgba(0,0,0,.12);
+        }
+
+
+        .camera-button {
+            position: absolute;
+            right: 0;
+            bottom: 5px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--lh-green);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border: 3px solid white;
+        }
+
+
+        .profile-field {
+            margin-bottom: 20px;
+        }
+
+
+        .profile-field label {
+            display: block;
+            font-weight: 700;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+
+        .profile-field input,
+        .profile-field textarea,
+        .profile-field select {
+            width: 100%;
+            border: 1px solid var(--lh-border);
+            border-radius: 9px;
+            padding: 12px;
+            outline: none;
+            font-size: 14px;
+        }
+
+
+        .profile-field textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+
+        .profile-field input:focus,
+        .profile-field textarea:focus,
+        .profile-field select:focus {
+            border-color: var(--lh-green);
+        }
+
+
+        .save-profile-btn {
+            width: 100%;
+            height: 48px;
+            border: none;
+            border-radius: 9px;
+            background: var(--lh-green);
+            color: white;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+
+        .save-profile-btn:hover {
+            background: var(--lh-green-dark);
+        }
+
+
+        .profile-message {
+            text-align: center;
+            color: var(--lh-green);
+            font-size: 13px;
+            margin-top: 10px;
+            display: none;
+        }
+
+
+        /* ==============================
+           MOBILE
+        ============================== */
+
+        @media (max-width: 900px) {
+
+            .messages-topbar {
+                padding: 0 15px;
+                height: 90px;
+            }
+
+
+            .messages-logo {
+                min-width: auto;
+                width: 84px;
+                height: 84px;
+            }
+
+
+            .conversation-search {
+                display: none;
+            }
+
+
+            .top-profile-info {
+                display: none;
+            }
+
+
+            .messages-shell {
+                height: calc(100vh - 90px);
+                grid-template-columns: 280px 1fr;
+            }
+
+
+            .chat-messages {
+                padding: 20px 15px;
+            }
+
+
+            .message-bubble {
+                max-width: 80%;
+            }
+
+
+            .profile-drawer {
+                width: min(350px, 90vw);
+            }
+
+        }
+
+
+        @media (max-width: 650px) {
+
+            .messages-shell {
+                grid-template-columns: 1fr;
+            }
+
+
+            .messages-sidebar {
+                display: none;
+            }
+
+
+            .chat-area {
+                width: 100%;
+            }
+
+
+            .chat-header {
+                padding: 12px 15px;
+            }
+
+
+            .chat-action:nth-child(1),
+            .chat-action:nth-child(2) {
+                display: none;
+            }
+
+
+            .message-form {
+                padding: 10px;
+            }
+
+
+            .send-message-btn {
+                width: 70px;
+            }
+
+
+            .chat-protection {
+                font-size: 11px;
+                padding: 7px 10px;
+            }
+
+        }
+
+        /* WhatsApp-inspired private chat layout */
+        .messages-topbar { height: 64px; padding: 0 20px; gap: 16px; background: #075e54; box-shadow: 0 1px 3px rgba(0,0,0,.18); }
+        .messages-logo { width: 52px; height: 52px; }
+        .conversation-search { max-width: 440px; margin: 0; }
+        .conversation-search input { height: 38px; border-radius: 8px; background: rgba(0,0,0,.16); font-size: 13px; }
+        .search-icon { top: 10px; }
+        .messages-shell { height: calc(100vh - 64px); max-width: none; grid-template-columns: 380px minmax(0, 1fr); border: 0; }
+        .messages-sidebar { background: #fff; }
+        .sidebar-header { padding: 18px 16px 12px; border-bottom: 1px solid #e9edef; }
+        .sidebar-header small { display: none; }
+        .sidebar-header h1 { margin: 0 0 14px; font-size: 20px; font-weight: 600; }
+        .message-filters { gap: 6px; }
+        .message-filter { border: 0; padding: 7px 13px; border-radius: 18px; background: #f0f2f5; font-size: 12px; }
+        .message-filter.active { color: #0b6b4e; background: #d9fdd3; border: 0; }
+        .conversation-item { min-height: 72px; padding: 11px 14px; border-left: 0; border-bottom-color: #f0f2f5; }
+        .conversation-item:hover { background: #f5f6f6; }
+        .conversation-item.active { background: #f0f2f5; border-left: 0; }
+        .conversation-avatar { width: 48px; height: 48px; }
+        .conversation-name { font-size: 14px; font-weight: 600; }.conversation-time { font-size: 11px; }.conversation-property { display: none; }.conversation-preview { margin-top: 4px; font-size: 12px; color: #667781; }.unread-count { min-width: 19px; height: 19px; background: #25d366; font-size: 10px; }
+        .chat-area { background: #efeae2; }.chat-empty { background: #f0f2f5; }.chat-empty-icon { background: #d9fdd3; color: #075e54; }
+        .chat-header { min-height: 64px; padding: 8px 18px; background: #f0f2f5; border-bottom-color: #d8dfe3; }
+        .chat-person { border: 0; padding: 0; text-align: left; background: transparent; cursor: pointer; }.chat-person-avatar { width: 42px; height: 42px; }.chat-person-name { font-size: 15px; font-weight: 600; }.online-status { color: #667781; font-size: 11px; }.online-dot { background: #25d366; }.chat-property { display: none; }
+        .chat-header-actions { margin-left: auto; display: flex; align-items: center; gap: 2px; }.chat-action { width: 38px; height: 38px; border: 0; border-radius: 50%; color: #54656f; background: transparent; font-size: 19px; }.chat-action:hover { background: #dfe5e7; }
+        .chat-protection { position: absolute; z-index: 2; top: 76px; left: 50%; transform: translateX(-50%); margin: 0; padding: 6px 11px; background: #ffeecd; color: #54656f; border-radius: 8px; font-size: 10px; box-shadow: 0 1px 1px rgba(0,0,0,.08); white-space: nowrap; }
+        .chat-messages { padding: 58px 7% 22px; background-color: #efeae2; background-image: radial-gradient(rgba(120,102,70,.13) .7px, transparent .7px); background-size: 14px 14px; }
+        .message-row { margin-bottom: 5px; gap: 0; }.message-avatar, .message-role { display: none; }.message-content { max-width: min(620px, 82%); }.message-bubble { max-width: none; padding: 7px 9px 5px; border-radius: 8px; box-shadow: 0 1px 1px rgba(11,20,26,.13); }.message-row.tenant .message-bubble { background: #d9fdd3; border-bottom-right-radius: 8px; }.message-row.owner .message-bubble { background: #fff; border: 0; border-bottom-left-radius: 8px; }.message-text { font-size: 13px; line-height: 1.45; }.message-meta { display: inline-block; float: right; margin: 3px 0 0 10px; font-size: 10px; color: #667781; }.message-check { color: #53bdeb; font-size: 0; }.message-check::after { content: "\2713\2713"; font-size: 11px; }
+        .chat-date-separator { width: max-content; max-width: 90%; margin: 12px auto; padding: 5px 10px; border-radius: 7px; background: #fff; color: #54656f; font-size: 10px; box-shadow: 0 1px 1px rgba(0,0,0,.08); text-transform: uppercase; }
+        .message-form { min-height: 62px; padding: 9px 14px; align-items: center; background: #f0f2f5; border-top: 0; }.message-input { min-height: 42px; border: 0; border-radius: 21px; padding: 0 16px; background: #fff; font-size: 13px; }.message-input:focus { border: 0; box-shadow: 0 0 0 2px rgba(7,94,84,.18); }.send-message-btn { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; flex: 0 0 42px; background: #00a884; font-size: 17px; }.send-message-btn:hover { background: #008f70; }
+        @media (max-width: 650px) { .messages-topbar { height: 56px; padding: 0 12px; }.messages-logo { width: 44px; height: 44px; }.messages-shell { height: calc(100vh - 56px); }.chat-header { padding: 7px 10px; }.chat-header-actions .chat-action:nth-child(1), .chat-header-actions .chat-action:nth-child(2) { display: none; }.chat-messages { padding: 54px 12px 14px; }.message-content { max-width: 88%; }.chat-protection { top: 69px; font-size: 9px; }.message-form { padding: 7px 9px; } }
+
+    </style>
+
+<link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+
+<body data-leasehub-page="tenant-messages">
+
+
+<!-- =========================================
+     TOP BAR
+========================================= -->
+
+<header class="messages-topbar">
+
+    <a
+        href="index.html"
+        class="messages-logo"
+    >
+            <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+    </a>
+
+
+    <div class="conversation-search">
+
+        <span class="search-icon"><i class="bx bx-search" aria-hidden="true"></i></span>
+
+        <input
+            type="text"
+            id="tenantConversationSearch"
+            placeholder="Search conversations..."
+        >
+
+    </div>
+
+
+    <div class="top-profile">
+
+        <img
+            id="tenantTopProfileAvatar"
+            class="top-profile-avatar"
+            src=""
+            alt="Profile"
+        >
+
+        <div class="top-profile-info">
+
+            <strong id="tenantTopProfileName">
+                Tenant
+            </strong>
+
+            <span>
+                Tenant
+            </span>
+
+        </div>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================
+     MAIN
+========================================= -->
+
+<main class="messages-shell">
+
+
+    <!-- =====================================
+         CONVERSATION SIDEBAR
+    ====================================== -->
+
+    <aside class="messages-sidebar">
+
+        <div class="sidebar-header">
+
+            <small>
+                LEASEHUB
+            </small>
+
+            <h1>
+                Messages
+            </h1>
+
+
+            <div class="message-filters">
+
+                <button
+                    class="message-filter active"
+                    data-filter="all"
+                >
+                    All
+                </button>
+
+                <button
+                    class="message-filter"
+                    data-filter="unread"
+                >
+                    Unread
+                </button>
+
+                <button
+                    class="message-filter"
+                    data-filter="starred"
+                >
+                    Starred
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="conversationList"
+            class="conversation-list"
+        ></div>
+
+
+        <div
+            id="noConversations"
+            class="messages-empty"
+        >
+
+            <div style="font-size:40px;">
+                <i class="bx bx-message-rounded" aria-hidden="true"></i>
+            </div>
+
+            <strong>
+                No conversations
+            </strong>
+
+            <p>Start a conversation with a property owner to ask about a listing.</p>
+
+        </div>
+
+    </aside>
+
+
+    <!-- =====================================
+         CHAT AREA
+    ====================================== -->
+
+    <section class="chat-area">
+
+
+        <!-- EMPTY CHAT -->
+
+        <div
+            id="chatEmpty"
+            class="chat-empty"
+        >
+
+            <div class="chat-empty-icon">
+                <i class="bx bx-message-rounded" aria-hidden="true"></i>
+            </div>
+
+            <h2>
+                Select a conversation
+            </h2>
+
+            <p>
+                Your LeaseHub conversations
+                will appear here.
+            </p>
+
+        </div>
+
+
+        <!-- ACTIVE CHAT -->
+
+        <div
+            id="chatContent"
+            class="chat-content"
+        >
+
+
+            <!-- CHAT HEADER -->
+
+            <header class="chat-header">
+
+                <button type="button" class="chat-person chat-owner-trigger" id="chatOwnerProfileBtn" aria-label="Open owner profile">
+
+                    <img
+                        id="tenantChatOwnerAvatar"
+                        class="chat-person-avatar"
+                        src=""
+                        alt="Property Owner"
+                    >
+
+
+                    <div>
+
+                        <div
+                            id="chatPersonName"
+                            class="chat-person-name"
+                        >
+                            Property Owner
+                        </div>
+
+
+                        <div class="online-status">
+
+                            <span class="online-dot"></span>
+
+                            Online
+
+                        </div>
+
+
+                        <div
+                            id="chatPropertyName"
+                            class="chat-property"
+                        >
+                            Property
+                        </div>
+
+                    </div>
+
+                </button>
+
+
+                <div class="chat-header-actions">
+
+                    <button type="button" class="chat-action" id="chatCallBtn" title="Call owner" aria-label="Call owner"><i class="bx bx-phone"></i></button>
+
+
+                    <button type="button" class="chat-action" id="chatVideoBtn" title="Start video call" aria-label="Start video call"><i class="bx bx-video"></i></button>
+
+
+                    <button type="button" class="chat-action" id="openTenantProfileBtn" title="Your profile" aria-label="Open your profile"><i class="bx bx-user"></i></button>
+
+                </div>
+
+            </header>
+
+
+            <!-- PROTECTION -->
+
+            <div class="chat-protection">
+
+                <i class="bx bx-lock" aria-hidden="true"></i> Messages are protected by LeaseHub.
+
+            </div>
+
+
+            <!-- MESSAGES -->
+
+            <div
+                id="chatMessages"
+                class="chat-messages"
+            ></div>
+
+
+            <!-- MESSAGE FORM -->
+
+            <form
+                id="messageForm"
+                class="message-form"
+            >
+
+                <input
+                    type="text"
+                    id="messageInput"
+                    class="message-input"
+                    placeholder="Type a message"
+                    autocomplete="off"
+                    required
+                >
+
+
+                <button
+                    type="submit"
+                    class="send-message-btn"
+                    aria-label="Send message"
+                    title="Send message"
+                >
+                    <i class="bx bx-send" aria-hidden="true"></i>
+                </button>
+
+            </form>
+
+
+        </div>
+
+
+        <!-- =================================
+             PROFILE DRAWER
+        ================================== -->
+
+        <aside
+            id="tenantProfileDrawer"
+            class="profile-drawer"
+        >
+
+
+            <div class="profile-drawer-header">
+
+                <h2>
+                    Your Profile
+                </h2>
+
+
+                <button
+                    id="closeTenantProfileBtn"
+                    class="close-profile"
+                >
+                    <i class="bx bx-x" aria-hidden="true"></i>
+                </button>
+
+            </div>
+
+
+            <div class="profile-picture-area">
+
+                <div class="profile-picture-wrapper">
+
+                    <img
+                        id="tenantProfilePreview"
+                        class="profile-picture"
+                        src=""
+                        alt="Profile picture"
+                    >
+
+
+                    <label for="tenantProfilePictureInput" class="camera-button" title="Change photo"><i class="bx bx-camera"></i></label>
+
+                </div>
+
+
+                <input
+                    type="file"
+                    id="tenantProfilePictureInput"
+                    accept="image/*"
+                    hidden
+                >
+
+            </div>
+
+
+            <div class="profile-field">
+
+                <label
+                    for="tenantDisplayName"
+                >
+                    Display Name
+                </label>
+
+
+                <input
+                    type="text"
+                    id="tenantDisplayName"
+                    placeholder="Enter your name"
+                >
+
+            </div>
+
+
+            <div class="profile-field">
+
+                <label
+                    for="tenantAccountType"
+                >
+                    Account Type
+                </label>
+
+
+                <select
+                    id="tenantAccountType"
+                >
+
+                    <option value="tenant">
+                        Tenant
+                    </option>
+
+                    <option value="student">
+                        Student
+                    </option>
+
+                    <option value="business">
+                        Business
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="profile-field">
+
+                <label
+                    for="tenantBio"
+                >
+                    Bio
+                </label>
+
+
+                <textarea
+                    id="tenantBio"
+                    placeholder="Tell property owners a little about yourself..."
+                ></textarea>
+
+            </div>
+
+
+            <button
+                id="saveTenantProfileBtn"
+                class="save-profile-btn"
+            >
+                Save Profile
+            </button>
+
+
+            <div
+                id="tenantProfileMessage"
+                class="profile-message"
+            >
+                Profile saved successfully.
+            </div>
+
+
+        </aside>
+
+
+    </section>
+
+</main>
+
+
+<script src="JS/data.js"></script>
+
+<script src="JS/app.js"></script>
+
+<script src="JS/messages.js"></script>
+
+
+<script src="JS/leasehub-polish.js"></script>
+
+<footer class="site-footer leasehub-standard-footer"><div class="footer-bottom"><span>© 2026 LeaseHub. All rights reserved.</span><span>Built for Nigeria</span></div></footer>
+</body>
+
+</html>

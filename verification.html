@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LeaseHub | Verification Center</title>
+<meta name="description" content="LeaseHub verification center for property and owner verification requests.">
+
+    <!-- LeaseHub Verification CSS -->
+    <link rel="stylesheet" href="CSS/verification.css"><link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+<body>
+
+    <!-- =========================
+         TOP NAVIGATION
+    ========================== -->
+
+    <header class="verification-header">
+
+        <div class="brand">
+
+            <img class="brand-logo" src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+
+            <div>
+                <p>Verification Center</p>
+            </div>
+
+        </div>
+
+        <a href="index.html" class="back-btn">
+            <i class="bx bx-arrow-back"></i>
+            <span>Back to Dashboard</span>
+        </a>
+
+    </header>
+
+
+    <!-- =========================
+         HERO
+    ========================== -->
+
+    <section class="verification-hero">
+
+        <div class="hero-content">
+
+            <div class="hero-badge">
+                <i class="bx bx-shield"></i>
+                LeaseHub Trust &amp; Safety
+            </div>
+
+            <h2>
+                Make renting
+                <span>safer.</span>
+            </h2>
+
+            <p>
+                Verify landlords and properties so tenants can find
+                trustworthy homes with confidence.
+            </p>
+
+        </div>
+
+
+        <div class="hero-shield">
+
+            <div class="shield-circle">
+                <i class="bx bx-shield"></i>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         STATS
+    ========================== -->
+
+    <section class="stats-container">
+
+        <div class="stats-grid">
+
+            <!-- TOTAL REQUESTS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    <i class="bx bx-file"></i>
+                </div>
+
+                <div>
+                    <h3 id="totalRequests">0</h3>
+                    <p>Total Requests</p>
+                </div>
+
+            </div>
+
+
+            <!-- PENDING -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon pending">
+                    <i class="bx bx-time-five"></i>
+                </div>
+
+                <div>
+                    <h3 id="pendingRequests">0</h3>
+                    <p>Pending</p>
+                </div>
+
+            </div>
+
+
+            <!-- VERIFIED -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon verified">
+                    <i class="bx bx-check-circle"></i>
+                </div>
+
+                <div>
+                    <h3 id="verifiedRequests">0</h3>
+                    <p>Verified</p>
+                </div>
+
+            </div>
+
+
+            <!-- VERIFIED LANDLORDS -->
+
+            <div class="stat-card">
+
+                <div class="stat-icon landlord">
+                    <i class="bx bx-user-check"></i>
+                </div>
+
+                <div>
+                    <h3 id="verifiedLandlords">0</h3>
+                    <p>Verified Landlords</p>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =========================
+         MAIN CONTENT
+    ========================== -->
+
+    <main class="verification-container">
+
+        <div class="verification-grid">
+
+
+            <!-- =========================
+                 VERIFICATION REQUEST
+            ========================== -->
+
+            <section class="verification-card">
+
+                <div class="card-heading">
+
+                    <div>
+
+                        <span class="small-label">
+                            START VERIFICATION
+                        </span>
+
+                        <h3>
+                            Submit a Verification Request
+                        </h3>
+
+                        <p>
+                            Tell us what you want to verify.
+                        </p>
+
+                    </div>
+
+                    <div class="heading-icon">
+                        <i class="bx bx-shield"></i>
+                    </div>
+
+                </div>
+
+
+                <!-- VERIFICATION FORM -->
+
+                <form id="verificationForm">
+
+                    <div class="form-group">
+
+                        <label for="verificationType">
+                            What do you want to verify?
+                        </label>
+
+                        <select
+                            id="verificationType"
+                            class="form-control"
+                            required
+                        >
+
+                            <option value="">
+                                Select verification type
+                            </option>
+
+                            <option value="Property">
+                                <i class="bx bx-building-house" aria-hidden="true"></i> Property
+                            </option>
+
+                            <option value="Landlord">
+                                <i class="bx bx-user" aria-hidden="true"></i> Landlord
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="name">
+                            Name / Property Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="name"
+                            class="form-control"
+                            placeholder="e.g. 3 Bedroom Apartment"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="location">
+                            Location
+                        </label>
+
+                        <input
+                            type="text"
+                            id="location"
+                            class="form-control"
+                            placeholder="e.g. Lekki, Lagos"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="owner">
+                            Landlord / Owner
+                        </label>
+
+                        <input
+                            type="text"
+                            id="owner"
+                            class="form-control"
+                            placeholder="e.g. John Ade"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label for="description">
+                            Additional Information
+                        </label>
+
+                        <textarea
+                            id="description"
+                            class="form-control"
+                            rows="4"
+                            placeholder="Tell LeaseHub anything important about this verification request..."
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="submit-btn"
+                    >
+
+                        <i class="fa-solid fa-paper-plane"></i>
+
+                        Submit for Verification
+
+                    </button>
+
+                </form>
+
+            </section>
+
+
+
+            <!-- =========================
+                 REQUEST LIST
+            ========================== -->
+
+            <section class="requests-section">
+
+                <div class="requests-header">
+
+                    <div>
+
+                        <span class="small-label">
+                            ADMIN REVIEW
+                        </span>
+
+                        <h3>
+                            Verification Requests
+                        </h3>
+
+                        <p>
+                            Review and manage verification requests.
+                        </p>
+
+                    </div>
+
+
+                    <!-- FILTER BUTTONS -->
+
+                    <div class="filter-buttons">
+
+                        <button
+                            type="button"
+                            class="filter-btn active"
+                            data-filter="all"
+                        >
+                            All
+                        </button>
+
+                        <button
+                            type="button"
+                            class="filter-btn"
+                            data-filter="pending"
+                        >
+                            Pending
+                        </button>
+
+                        <button
+                            type="button"
+                            class="filter-btn"
+                            data-filter="verified"
+                        >
+                            Verified
+                        </button>
+
+                        <button
+                            type="button"
+                            class="filter-btn"
+                            data-filter="rejected"
+                        >
+                            Rejected
+                        </button>
+
+                    </div>
+
+                </div>
+
+
+                <!-- REQUESTS GENERATED BY JAVASCRIPT -->
+
+                <div
+                    id="requestList"
+                    class="request-list"
+                ></div>
+
+            </section>
+
+        </div>
+
+    </main>
+
+
+
+    <!-- =========================
+         SUCCESS POPUP
+    ========================== -->
+
+    <div
+        id="successPopup"
+        class="success-popup"
+    >
+
+        <div class="popup-content">
+
+            <div class="popup-icon">
+                <i class="fa-solid fa-check"></i>
+            </div>
+
+            <h3>
+                Request Submitted!
+            </h3>
+
+            <p>
+                Your verification request has been sent successfully.
+            </p>
+
+            <button
+                type="button"
+                id="closePopup"
+                class="popup-close"
+            >
+                Done
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =========================
+         JAVASCRIPT
+    ========================== -->
+
+    <script src="JS/verification.js"></script>
+
+<script src="JS/leasehub-polish.js"></script>
+
+<footer class="site-footer leasehub-standard-footer"><div class="footer-bottom"><span>© 2026 LeaseHub. All rights reserved.</span><span>Built for Nigeria</span></div></footer>
+</body>
+
+</html>

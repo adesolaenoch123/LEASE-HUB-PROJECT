@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Owner Dashboard — LeaseHub</title>
+<meta name="description" content="Manage LeaseHub property listings, viewing requests, rental applications and owner activity.">
+
+    <link
+        rel="stylesheet"
+        href="CSS/style.css"
+    >
+
+<link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+
+<body>
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+        <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+    </a>
+
+
+    <nav class="nav-links">
+
+        <a href="properties.html">
+            View Marketplace
+        </a>
+
+        <a href="owner-messages.html">
+            Messages
+        </a>
+
+    </nav>
+
+
+    <div class="dashboard-user">
+
+        <span id="ownerDashboardName">
+            Owner
+        </span>
+
+        <button
+            id="ownerLogoutBtn"
+            class="logout-btn"
+        >
+            Log out
+        </button>
+
+    </div>
+
+    <button class="menu-btn" type="button" aria-label="Open navigation" aria-expanded="false"><i class="bx bx-menu" aria-hidden="true"></i></button>
+
+</header>
+
+
+<main class="dashboard">
+
+    <!-- WELCOME -->
+
+    <section class="dashboard-welcome">
+
+        <div>
+
+            <span class="section-label">
+                PROPERTY OWNER DASHBOARD
+            </span>
+
+            <h1 id="ownerWelcome">
+                Welcome back.
+            </h1>
+
+            <p>
+                Manage your properties,
+                viewing requests,
+                rental applications and listings.
+            </p>
+
+        </div>
+
+
+        <a
+            href="add-property.html"
+            class="primary-btn"
+        >
+            + Add Property
+        </a>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <section class="dashboard-stats">
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                <i class="bx bx-building-house" aria-hidden="true"></i>
+            </span>
+
+            <div>
+
+                <strong id="ownerListingCount">
+                    0
+                </strong>
+
+                <p>
+                    My listings
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                <i class="bx bx-show" aria-hidden="true"></i>
+            </span>
+
+            <div>
+
+                <strong>
+                    0
+                </strong>
+
+                <p>
+                    Property views
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                <i class="bx bx-calendar" aria-hidden="true"></i>
+            </span>
+
+            <div>
+
+                <strong id="ownerViewingCount">
+                    0
+                </strong>
+
+                <p>
+                    Viewing requests
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="stat-card">
+
+            <span class="stat-icon">
+                <i class="bx bx-file" aria-hidden="true"></i>
+            </span>
+
+            <div>
+
+                <strong id="ownerApplicationCount">
+                    0
+                </strong>
+
+                <p>
+                    Rental applications
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- QUICK ACTIONS -->
+
+    <section class="dashboard-section">
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <h2>
+                    Quick actions
+                </h2>
+
+                <p>
+                    Manage your LeaseHub business.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="quick-actions">
+
+            <a
+                href="add-property.html"
+                class="quick-action"
+            >
+
+                <span>
+                    <i class="bx bx-plus" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Add property
+                    </strong>
+
+                    <p>
+                        List a new property.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="#myProperties"
+                class="quick-action"
+            >
+
+                <span>
+                    <i class="bx bx-building-house" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        My properties
+                    </strong>
+
+                    <p>
+                        Manage your listings.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="#ownerViewings"
+                class="quick-action"
+            >
+
+                <span>
+                    <i class="bx bx-calendar" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Viewing requests
+                    </strong>
+
+                    <p>
+                        See tenant requests.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="#ownerApplications"
+                class="quick-action"
+            >
+
+                <span>
+                    <i class="bx bx-file" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Rental applications
+                    </strong>
+
+                    <p>
+                        Review tenant applications.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+            <a
+                href="owner-messages.html"
+                class="quick-action"
+            >
+
+                <span>
+                    <i class="bx bx-message-rounded" aria-hidden="true"></i>
+                </span>
+
+                <div>
+
+                    <strong>
+                        Messages
+                    </strong>
+
+                    <p>
+                        Talk to potential tenants.
+                    </p>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- MY PROPERTIES -->
+
+    <section
+        class="dashboard-section"
+        id="myProperties"
+    >
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <h2>
+                    My properties
+                </h2>
+
+                <p>
+                    Your current LeaseHub listings.
+                </p>
+
+            </div>
+
+
+            <a href="add-property.html">
+                + Add property
+            </a>
+
+        </div>
+
+
+        <div
+            id="ownerProperties"
+            class="owner-property-list"
+        >
+
+        </div>
+
+
+        <div
+            id="emptyOwnerProperties"
+            class="dashboard-empty"
+        >
+
+            <div>
+                <i class="bx bx-building-house" aria-hidden="true"></i>
+            </div>
+
+            <h3>
+                You haven't listed a property yet
+            </h3>
+
+            <p>
+                Add your first property and start
+                connecting with potential tenants.
+            </p>
+
+            <a
+                href="add-property.html"
+                class="primary-btn"
+            >
+                Add Your First Property
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- VIEWING REQUESTS -->
+
+    <section
+        class="dashboard-section"
+        id="ownerViewings"
+    >
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <h2>
+                    Viewing requests
+                </h2>
+
+                <p>
+                    Requests from potential tenants.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="ownerViewingRequests"
+            class="viewing-list"
+        >
+
+        </div>
+
+
+        <div
+            id="emptyOwnerViewings"
+            class="dashboard-empty small-empty"
+        >
+
+            <div>
+                <i class="bx bx-calendar" aria-hidden="true"></i>
+            </div>
+
+            <h3>
+                No viewing requests yet
+            </h3>
+
+            <p>
+                Tenant viewing requests will appear here.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- RENTAL APPLICATIONS -->
+
+    <section
+        class="dashboard-section"
+        id="ownerApplications"
+    >
+
+        <div class="dashboard-section-heading">
+
+            <div>
+
+                <h2>
+                    Rental applications
+                </h2>
+
+                <p>
+                    Review applications from tenants interested
+                    in renting your properties.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="ownerRentalApplications"
+            class="viewing-list"
+        >
+
+        </div>
+
+
+        <div
+            id="emptyOwnerApplications"
+            class="dashboard-empty small-empty"
+        >
+
+            <div>
+                <i class="bx bx-file" aria-hidden="true"></i>
+            </div>
+
+            <h3>
+                No rental applications yet
+            </h3>
+
+            <p>
+                Applications from tenants will appear here
+                when someone applies to rent one of your properties.
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<footer>
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 LeaseHub
+        </span>
+
+        <span>
+            Built for Nigeria Nigeria
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script src="JS/data.js"></script>
+<script src="JS/app.js"></script>
+
+<script src="JS/leasehub-polish.js"></script>
+</body>
+
+</html>

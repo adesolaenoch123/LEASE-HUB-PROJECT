@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Add Property — LeaseHub</title>
+
+    <link
+        rel="stylesheet"
+        href="CSS/style.css"
+    >
+
+<link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+
+<body data-leasehub-page="add-property">
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+            <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+    </a>
+
+    <a
+        href="owner-dashboard.html"
+        class="back-link"
+    >
+        ← Dashboard
+    </a>
+
+</header>
+
+
+<main class="add-property-page">
+
+    <div class="form-header">
+
+        <span class="section-label">
+            LIST A PROPERTY
+        </span>
+
+        <h1>
+            Add your property.
+        </h1>
+
+        <p>
+            Provide accurate information so potential
+            tenants can find your property.
+        </p>
+
+    </div>
+
+
+    <form
+        id="addPropertyForm"
+        class="property-form"
+    >
+
+        <!-- BASIC INFORMATION -->
+
+        <section class="form-section">
+
+            <div class="form-section-heading">
+
+                <span>01</span>
+
+                <div>
+
+                    <h2>
+                        Basic information
+                    </h2>
+
+                    <p>
+                        Tell us about the property.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <label class="full-field">
+
+                    Property title
+
+                    <input
+                        type="text"
+                        id="propertyTitle"
+                        placeholder="e.g. Modern 3 Bedroom Apartment"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Property type
+
+                    <select
+                        id="propertyType"
+                        required
+                    >
+
+                        <option value="">
+                            Select type
+                        </option>
+
+                        <option value="Apartment">
+                            Apartment
+                        </option>
+
+                        <option value="Studio Apartment">
+                            Studio Apartment
+                        </option>
+
+                        <option value="House">
+                            House
+                        </option>
+
+                        <option value="Duplex">
+                            Duplex
+                        </option>
+
+                        <option value="Shortlet">
+                            Shortlet
+                        </option>
+
+                        <option value="Office">
+                            Office Space
+                        </option>
+
+                        <option value="Shop">
+                            Shop
+                        </option>
+
+                        <option value="Warehouse">
+                            Warehouse
+                        </option>
+
+                        <option value="Land">
+                            Land
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    Listing purpose
+
+                    <select
+                        id="listingPurpose"
+                        required
+                    >
+
+                        <option value="">
+                            Select purpose
+                        </option>
+
+                        <option value="Rent">
+                            Rent
+                        </option>
+
+                        <option value="Shortlet">
+                            Shortlet
+                        </option>
+
+                        <option value="Sale">
+                            Sale
+                        </option>
+
+                        <option value="Lease">
+                            Lease
+                        </option>
+
+                    </select>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- LOCATION -->
+
+        <section class="form-section">
+
+            <div class="form-section-heading">
+
+                <span>02</span>
+
+                <div>
+
+                    <h2>
+                        Location
+                    </h2>
+
+                    <p>
+                        Where is the property located?
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <label>
+
+                    State
+
+                    <select
+                        id="propertyState"
+                        required
+                    >
+
+                        <option value="">
+                            Select state
+                        </option>
+
+                        <option>
+                            Lagos
+                        </option>
+
+                        <option>
+                            Abuja
+                        </option>
+
+                        <option>
+                            Rivers
+                        </option>
+
+                        <option>
+                            Oyo
+                        </option>
+
+                        <option>
+                            Ogun
+                        </option>
+
+                        <option>
+                            Enugu
+                        </option>
+
+                        <option>
+                            Kaduna
+                        </option>
+
+                        <option>
+                            Kano
+                        </option>
+
+                        <option>
+                            Delta
+                        </option>
+
+                        <option>
+                            Edo
+                        </option>
+
+                        <option>
+                            Anambra
+                        </option>
+
+                        <option>
+                            Akwa Ibom
+                        </option>
+
+                        <option>
+                            Cross River
+                        </option>
+
+                        <option>
+                            Kwara
+                        </option>
+
+                        <option>
+                            Osun
+                        </option>
+
+                        <option>
+                            Ondo
+                        </option>
+
+                        <option>
+                            Ekiti
+                        </option>
+
+                        <option>
+                            Imo
+                        </option>
+
+                        <option>
+                            Abia
+                        </option>
+
+                        <option>
+                            Benue
+                        </option>
+
+                        <option>
+                            Borno
+                        </option>
+
+                        <option>
+                            Niger
+                        </option>
+
+                        <option>
+                            Plateau
+                        </option>
+
+                        <option>
+                            Other
+                        </option>
+
+                    </select>
+
+                </label>
+
+
+                <label>
+
+                    City
+
+                    <input
+                        type="text"
+                        id="propertyCity"
+                        placeholder="e.g. Lekki"
+                        required
+                    >
+
+                </label>
+
+
+                <label class="full-field">
+
+                    Area / Address
+
+                    <input
+                        type="text"
+                        id="propertyLocation"
+                        placeholder="e.g. Lekki Phase 1"
+                        required
+                    >
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- PRICE -->
+
+        <section class="form-section">
+
+            <div class="form-section-heading">
+
+                <span>03</span>
+
+                <div>
+
+                    <h2>
+                        Pricing
+                    </h2>
+
+                    <p>
+                        Set your asking price.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <label>
+
+                    Price (₦)
+
+                    <input
+                        type="number"
+                        id="propertyPrice"
+                        placeholder="2500000"
+                        min="0"
+                        required
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Payment period
+
+                    <select
+                        id="propertyPeriod"
+                        required
+                    >
+
+                        <option value="year">
+                            Per year
+                        </option>
+
+                        <option value="month">
+                            Per month
+                        </option>
+
+                        <option value="night">
+                            Per night
+                        </option>
+
+                        <option value="week">
+                            Per week
+                        </option>
+
+                        <option value="total">
+                            Total price
+                        </option>
+
+                    </select>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- PROPERTY DETAILS -->
+
+        <section class="form-section">
+
+            <div class="form-section-heading">
+
+                <span>04</span>
+
+                <div>
+
+                    <h2>
+                        Property details
+                    </h2>
+
+                    <p>
+                        Help tenants understand the space.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="form-grid">
+
+                <label>
+
+                    Bedrooms
+
+                    <input
+                        type="number"
+                        id="propertyBedrooms"
+                        min="0"
+                        value="0"
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Bathrooms
+
+                    <input
+                        type="number"
+                        id="propertyBathrooms"
+                        min="0"
+                        value="1"
+                    >
+
+                </label>
+
+
+                <label>
+
+                    Size / capacity
+
+                    <input
+                        type="text"
+                        id="propertySize"
+                        placeholder="e.g. 500 sqm or 20 seats"
+                    >
+
+                </label>
+
+
+                <label class="full-field">
+
+                    Description
+
+                    <textarea
+                        id="propertyDescription"
+                        rows="7"
+                        placeholder="Describe the property, facilities, environment and anything tenants should know..."
+                        required
+                    ></textarea>
+
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <p id="propertyFormStatus" class="form-status" role="status" aria-live="polite"></p>
+
+
+        <!-- AMENITIES -->
+
+        <section class="form-section">
+
+            <div class="form-section-heading">
+
+                <span>05</span>
+
+                <div>
+
+                    <h2>
+                        Amenities
+                    </h2>
+
+                    <p>
+                        Select everything available.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="amenity-selector">
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="amenity"
+                        value="Parking"
+                    >
+                    <i class="bx bx-car" aria-hidden="true"></i> Parking
+                </label>
+
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="amenity"
+                        value="Security"
+                    >
+                    <i class="bx bx-shield" aria-hidden="true"></i> Security
+                </label>
+
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="amenity"
+                        value="Generator"
+                    >
+                    <i class="bx bx-bolt-circle" aria-hidden="true"></i> Generator
+                </label>
+
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="amenity"
+                        value="Water"
+                    >
+                    <i class="bx bx-droplet" aria-hidden="true"></i> Water
+                </label>
+
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="amenity"
+                        value="Electricity"
+                    >
+                    <i class="bx bx-bulb" aria-hidden="true"></i> Electricity
+                </label>
+
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="amenity"
+                        value="Swimming Pool"
+                    >
+                    <i class="bx bx-swim" aria-hidden="true"></i> Swimming Pool
+                </label>
+
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="amenity"
+                        value="Internet"
+                    >
+                    <i class="bx bx-wifi" aria-hidden="true"></i> Internet
+                </label>
+
+
+                <label>
+                    <input
+                        type="checkbox"
+                        name="amenity"
+                        value="Air Conditioning"
+                    >
+                    <i class="bx bx-wind" aria-hidden="true"></i> Air Conditioning
+                </label>
+
+            </div>
+
+        </section>
+
+
+        <!-- IMAGE -->
+
+        <section class="form-section">
+
+            <div class="form-section-heading">
+
+                <span>06</span>
+
+                <div>
+
+                    <h2>
+                        Property photo
+                    </h2>
+
+                    <p>
+                        Add 8–20 clear photos of your property. More complete listings are easier for tenants to understand.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <label class="upload-box">
+
+                <span>
+                    <i class="bx bx-camera" aria-hidden="true"></i>
+                </span>
+
+                <strong>
+                    Choose property photos
+                </strong>
+
+                <small>
+                    JPG, PNG or WEBP · 8–20 photos
+                </small>
+
+                <input
+                    type="file"
+                    id="propertyImage"
+                    accept="image/*"
+                    multiple
+                    aria-describedby="propertyImageHelp"
+                >
+
+            </label>
+
+
+            <small id="propertyImageHelp" class="leasehub-upload-help">Minimum 8 photos · Maximum 20 photos. You can remove, reorder and choose a cover photo before submitting.</small>
+
+            <div
+                id="imagePreview"
+                class="image-preview"
+            ></div>
+
+        </section>
+
+
+        <!-- VERIFICATION -->
+
+        <section class="verification-notice">
+
+            <div>
+                <i class="bx bx-shield" aria-hidden="true"></i>
+            </div>
+
+            <div>
+
+                <strong>
+                    LeaseHub verification
+                </strong>
+
+                <p>
+                    New listings will initially appear as
+                    <b>Pending Verification</b>. LeaseHub
+                    will verify the available information
+                    before giving the property a verified
+                    badge.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- SUBMIT -->
+
+        <div class="form-submit">
+
+            <a
+                href="owner-dashboard.html"
+                class="cancel-btn"
+            >
+                Cancel
+            </a>
+
+
+            <button
+                type="submit"
+                class="primary-btn"
+            >
+                Submit Property
+            </button>
+
+        </div>
+
+    </form>
+
+</main>
+
+<script src="JS/data.js"></script>
+<script src="JS/app.js"></script>
+<script src="JS/add-property.js"></script>
+<script src="JS/add-property-wizard.js"></script>
+
+<script src="JS/leasehub-polish.js"></script>
+
+<footer class="site-footer leasehub-standard-footer"><div class="footer-bottom"><span>© 2026 LeaseHub. All rights reserved.</span><span>Built for Nigeria</span></div></footer>
+</body>
+
+</html>

@@ -1,0 +1,541 @@
+/* =========================================================
+   LEASEHUB - PROPERTY DETAILS EXPERIENCE
+   Styles for gallery, trust, cost breakdown, discovery,
+   save states and mobile layout.
+   ========================================================= */
+
+/* ================= IMAGE / GALLERY ================= */
+
+.property-details-image {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    border-radius: 16px;
+    background: var(--light, #f4f6f5);
+}
+
+.property-details-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0;
+    transform: scale(1.02);
+    transition: opacity .5s ease, transform .6s ease;
+}
+
+.property-details-image img.is-loaded {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.property-details-image.image-error::after {
+    content: "Image unavailable";
+    position: absolute;
+    inset: 0;
+    display: grid;
+    place-items: center;
+    color: var(--gray, #7a8a80);
+    font-size: 13px;
+}
+
+/* image loading shimmer */
+
+.property-details-image::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        100deg,
+        rgba(0, 0, 0, 0.03) 30%,
+        rgba(0, 0, 0, 0.07) 50%,
+        rgba(0, 0, 0, 0.03) 70%
+    );
+    background-size: 200% 100%;
+    animation: leasehubShimmer 1.4s infinite linear;
+    z-index: 0;
+}
+
+.property-details-image.image-error::before,
+.property-details-image img.is-loaded ~ * {
+    animation: none;
+}
+
+.property-details-image img.is-loaded {
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes leasehubShimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+}
+
+
+/* ================= SAVE BUTTON STATES ================= */
+
+.details-save-btn {
+    transition: transform .2s ease, background .2s ease, color .2s ease;
+}
+
+.details-save-btn.is-loading {
+    opacity: .6;
+    pointer-events: none;
+}
+
+.details-save-btn.is-success {
+    transform: scale(1.15);
+}
+
+
+/* ================= AMENITIES ================= */
+
+.amenity-empty {
+    color: var(--gray, #7a8a80);
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+
+/* ================= AVAILABILITY ================= */
+
+.availability-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 14px;
+    font-size: 15px;
+}
+
+.availability-dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.availability-dot.is-available {
+    background: #1f9d55;
+    box-shadow: 0 0 0 4px rgba(31, 157, 85, 0.15);
+}
+
+.availability-dot.is-pending {
+    background: #d9a441;
+    box-shadow: 0 0 0 4px rgba(217, 164, 65, 0.15);
+}
+
+.availability-note {
+    margin-top: 10px;
+    color: var(--gray, #7a8a80);
+    font-size: 13px;
+    line-height: 1.7;
+}
+
+
+/* ================= LEASEHUB TRUST ================= */
+
+.trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-top: 22px;
+}
+
+.trust-item {
+    display: flex;
+    gap: 12px;
+    padding: 18px;
+    border: 1px solid var(--border, #e6ebe8);
+    border-radius: 13px;
+    background: #fff;
+}
+
+.trust-icon {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--green-light, #eaf5ee);
+    color: var(--green-dark, #1f6b45);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.trust-item strong {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.trust-item p {
+    color: var(--gray, #7a8a80);
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.trust-disclaimer {
+    margin-top: 18px;
+    padding: 14px 16px;
+    border-radius: 11px;
+    background: var(--light, #f4f6f5);
+    color: var(--gray, #7a8a80);
+    font-size: 12px;
+    line-height: 1.7;
+}
+
+
+/* ================= COST BREAKDOWN ================= */
+
+.cost-breakdown {
+    margin-top: 22px;
+    padding: 22px;
+    border: 1px solid var(--border, #e6ebe8);
+    border-radius: 14px;
+    background: #fff;
+}
+
+.cost-breakdown h3 {
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.cost-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 0;
+    border-bottom: 1px solid var(--border, #e6ebe8);
+    font-size: 13px;
+}
+
+.cost-row:last-of-type {
+    border-bottom: none;
+}
+
+.cost-row span {
+    color: var(--gray, #7a8a80);
+}
+
+.cost-row strong {
+    font-weight: 700;
+    color: var(--green-dark, #1f6b45);
+}
+
+.cost-row strong small {
+    color: var(--gray, #7a8a80);
+    font-weight: 500;
+    font-size: 11px;
+}
+
+.cost-muted {
+    color: var(--gray, #7a8a80) !important;
+    font-weight: 600 !important;
+}
+
+.cost-total {
+    margin-top: 6px;
+    padding-top: 14px;
+    border-top: 1px dashed var(--border, #e6ebe8);
+}
+
+.cost-note {
+    margin-top: 14px;
+    color: var(--gray, #7a8a80);
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+
+/* ================= DISCOVERY SECTIONS ================= */
+
+.discovery-section {
+    margin-top: 60px;
+}
+
+.discovery-section .section-heading {
+    margin-bottom: 22px;
+}
+
+.discovery-empty {
+    color: var(--gray, #7a8a80);
+    font-size: 14px;
+    padding: 20px 0;
+}
+
+/* Discovery card grid: responsive + evenly aligned cards.
+   minmax(0, 1fr) prevents track overflow, and stretching
+   children keeps every card the same height per row. */
+
+.discovery-section .property-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 22px;
+    align-items: stretch;
+    width: 100%;
+}
+
+.discovery-section .property-grid > * {
+    height: 100%;
+    min-width: 0;
+}
+
+@media (max-width: 1000px) {
+
+    .discovery-section .property-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 640px) {
+
+    .discovery-section .property-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
+
+/* ================= RESPONSIVE / MOBILE ================= */
+
+@media (max-width: 900px) {
+
+    .trust-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .property-details-image {
+        aspect-ratio: 4 / 3;
+        border-radius: 13px;
+    }
+
+    .discovery-section {
+        margin-top: 44px;
+    }
+}
+
+@media (max-width: 600px) {
+
+    .property-details-image {
+        aspect-ratio: 3 / 2;
+    }
+
+    .cost-breakdown {
+        padding: 18px;
+    }
+
+    .cost-row {
+        font-size: 12px;
+    }
+
+    .trust-item {
+        padding: 15px;
+    }
+
+    .availability-row {
+        font-size: 14px;
+    }
+}
+
+/* =====================================================
+   LEASEHUB TRUST - FINAL LAYOUT FIX
+   ===================================================== */
+
+.details-section.trust-section {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 50px 0 !important;
+    padding: 0 !important;
+    box-sizing: border-box;
+}
+
+/* Trust label */
+.trust-section > .section-label {
+    display: block !important;
+    width: 100%;
+    margin: 0 0 10px !important;
+
+    color: #15945c;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    line-height: 1.4;
+    text-transform: uppercase;
+}
+
+/* Main heading */
+.trust-section > h2 {
+    display: block !important;
+    width: 100%;
+    max-width: 700px;
+
+    margin: 0 0 30px !important;
+
+    color: #101311;
+    font-size: clamp(30px, 4vw, 42px);
+    font-weight: 800;
+    line-height: 1.12;
+    letter-spacing: -1px;
+}
+
+
+/* =====================================================
+   TRUST CARDS
+   ===================================================== */
+
+.trust-section .trust-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+
+    width: 100% !important;
+    max-width: 100% !important;
+
+    gap: 16px;
+    margin: 0 !important;
+    padding: 0 !important;
+
+    box-sizing: border-box;
+}
+
+.trust-section .trust-item {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: flex-start;
+
+    min-width: 0 !important;
+    width: 100% !important;
+
+    padding: 22px 18px;
+
+    background: #ffffff;
+    border: 1px solid #e3e8e5;
+    border-radius: 16px;
+
+    box-sizing: border-box;
+}
+
+
+/* Icon */
+.trust-section .trust-icon {
+    flex: 0 0 38px;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 12px;
+
+    border-radius: 50%;
+    background: #e9f7ef;
+    color: #15945c;
+
+    font-size: 17px;
+    font-weight: 800;
+}
+
+
+/* Text inside card */
+.trust-section .trust-item > div {
+    min-width: 0;
+    flex: 1;
+}
+
+.trust-section .trust-item strong {
+    display: block;
+
+    margin: 0 0 7px;
+
+    color: #101311;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+}
+
+.trust-section .trust-item p {
+    margin: 0;
+
+    color: #66706a;
+    font-size: 12px;
+    line-height: 1.65;
+}
+
+
+/* =====================================================
+   DISCLAIMER
+   ===================================================== */
+
+.trust-section .trust-disclaimer {
+    display: block !important;
+
+    width: 100% !important;
+    max-width: 850px;
+
+    margin: 20px 0 0 !important;
+    padding: 16px 18px;
+
+    background: #f5f7f6;
+
+    border-left: 3px solid #15945c;
+    border-radius: 8px;
+
+    color: #66706a;
+    font-size: 12px;
+    line-height: 1.7;
+
+    box-sizing: border-box;
+}
+
+
+/* =====================================================
+   TABLET
+   ===================================================== */
+
+@media (max-width: 900px) {
+
+    .trust-section .trust-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+
+/* =====================================================
+   MOBILE
+   ===================================================== */
+
+@media (max-width: 600px) {
+
+    .details-section.trust-section {
+        margin: 40px 0 !important;
+    }
+
+    .trust-section > h2 {
+        font-size: 30px;
+    }
+
+    .trust-section .trust-grid {
+        grid-template-columns: 1fr !important;
+    }
+
+    .trust-section .trust-item {
+        padding: 18px 16px;
+    }
+}
+
+.trust-section .trust-item {
+    border: 1px solid #e3e8e5;
+    transition: all 0.3s ease;
+}
+
+.trust-section .trust-item:hover {
+    transform: translateY(-8px) scale(1.02);
+    border-color: #15945c;
+    box-shadow: 
+        0 12px 30px rgba(21, 148, 92, 0.20),
+        0 0 0 3px rgba(21, 148, 92, 0.08);
+}

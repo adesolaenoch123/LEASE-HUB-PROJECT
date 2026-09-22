@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Property Details — LeaseHub</title>
+<meta name="description" content="View LeaseHub property details, gallery, amenities, availability, viewing and rental application options.">
+
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="CSS/property-details.css">
+<link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+<body data-leasehub-page="property-details">
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+        <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+    </a>
+
+    <nav class="nav-links">
+        <a href="properties.html">Rent</a>
+        <a href="shortlets.html">Shortlets</a>
+        <a href="commercial.html">Commercial</a>
+            <a href="student-housing.html">Student Housing</a>
+            <a href="hotels.html">Hotels &amp; Lodges</a>
+            <a href="saved.html">Saved</a>
+            <a href="compare.html">Compare</a>
+        <a href="viewing-requests.html">
+            My Viewings
+        </a>
+    </nav>
+
+    <div class="nav-actions">
+
+        <a href="login.html" class="login-btn">
+            Log in
+        </a>
+
+        <a href="register.html" class="owner-btn">
+            List a Property
+        </a>
+
+    </div>
+
+    <button class="menu-btn" type="button" aria-label="Open navigation" aria-expanded="false"><i class="bx bx-menu" aria-hidden="true"></i></button>
+
+</header>
+
+
+<main class="property-page">
+
+    <!-- BACK -->
+
+    <a href="properties.html" class="back-link">
+        ← Back to properties
+    </a>
+
+
+    <!-- PROPERTY -->
+
+<section id="propertyDetails">
+
+    <div class="property-loading">
+        Loading property...
+    </div>
+
+</section>
+
+</main>
+
+
+<!-- VIEWING MODAL -->
+
+<div class="modal" id="viewingModal">
+
+    <div class="modal-content application-modal-content">
+
+        <button
+            class="modal-close"
+            id="closeModal"
+        >
+            <i class="bx bx-x" aria-hidden="true"></i>
+        </button>
+
+        <span class="section-label">
+            REQUEST A VIEWING
+        </span>
+
+        <h2>
+            Schedule a property viewing
+        </h2>
+
+        <p>
+            Choose a preferred date and time.
+        </p>
+
+
+        <form id="viewingForm">
+
+            <label>
+                Your name
+
+                <input
+                    type="text"
+                    id="viewerName"
+                    placeholder="Enter your name"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Preferred date
+
+                <input
+                    type="date"
+                    id="viewingDate"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Preferred time
+
+                <select id="viewingTime" required>
+
+                    <option value="">
+                        Select a time
+                    </option>
+
+                    <option>
+                        10:00 AM
+                    </option>
+
+                    <option>
+                        12:00 PM
+                    </option>
+
+                    <option>
+                        2:00 PM
+                    </option>
+
+                    <option>
+                        4:00 PM
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="primary-btn full-btn"
+            >
+                Request Viewing
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- RENTAL APPLICATION MODAL -->
+
+<div class="modal" id="applicationModal">
+
+    <div class="modal-content application-modal-content">
+
+        <button
+            class="modal-close"
+            id="closeApplicationModal"
+            type="button"
+            aria-label="Close rental application"
+        >
+            <i class="bx bx-x" aria-hidden="true"></i>
+        </button>
+
+        <span class="section-label">
+            RENTAL APPLICATION
+        </span>
+
+        <div class="application-modal-heading">
+            <div>
+                <h2>
+                    Apply to rent this property
+                </h2>
+
+                <p>
+                    Complete your details and the owner will review your application.
+                </p>
+            </div>
+
+            <span class="application-modal-icon" aria-hidden="true"><i class="bx bx-edit-alt" aria-hidden="true"></i></span>
+        </div>
+
+        <div class="application-modal-note">
+            <span aria-hidden="true"><i class="bx bx-check" aria-hidden="true"></i></span>
+            Your information is shared securely with the property owner.
+        </div>
+
+
+        <form id="rentalApplicationForm">
+
+            <label>
+                Full name
+
+                <input
+                    type="text"
+                    id="applicantName"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Email address
+
+                <input
+                    type="email"
+                    id="applicantEmail"
+                    placeholder="Enter your email"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Phone number
+
+                <input
+                    type="tel"
+                    id="applicantPhone"
+                    placeholder="Enter your phone number"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Preferred move-in date
+
+                <input
+                    type="date"
+                    id="moveInDate"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Message to owner
+
+                <textarea
+                    id="applicationMessage"
+                    rows="4"
+                    placeholder="Tell the owner about your application..."
+                ></textarea>
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="primary-btn full-btn"
+            >
+                Submit Application
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    <div class="footer-main">
+
+        <div>
+
+            <a href="index.html" class="logo">
+                <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+            </a>
+
+            <p>
+                Find your place without the unnecessary
+                agent fees.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <div class="footer-bottom">
+
+        <span>
+            © 2026 LeaseHub
+        </span>
+
+        <span>
+            Built for Nigeria Nigeria
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script src="JS/data.js"></script>
+<script src="JS/app.js"></script>
+<script src="JS/property-details.js"></script>
+<script src="JS/property-details-polish.js"></script>
+
+<script src="JS/leasehub-polish.js"></script>
+</body>
+
+</html>
+

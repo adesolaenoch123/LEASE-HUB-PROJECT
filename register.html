@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account — LeaseHub</title>
+<meta name="description" content="Create a LeaseHub account to find properties or list a property for tenants.">
+
+    <link rel="stylesheet" href="CSS/style.css">
+<link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <a href="index.html" class="logo">
+        <img src="IMAGES/Lease Hub logo.png" alt="Lease Hub">
+    </a>
+
+    <a href="properties.html" class="back-link">
+        Browse properties
+    </a>
+
+</header>
+
+
+<main class="auth-page">
+
+    <div class="auth-container">
+
+        <div class="auth-heading">
+
+            <span class="section-label">
+                JOIN LEASEHUB
+            </span>
+
+            <h1>
+                Create your account.
+            </h1>
+
+            <p>
+                Find a home or list your property without
+                unnecessary agent charges.
+            </p>
+
+        </div>
+
+
+        <form id="registerForm" class="auth-form">
+
+            <label>
+                I am a...
+
+                <select id="accountType" required>
+
+                    <option value="">
+                        Select account type
+                    </option>
+
+                    <option value="tenant">
+                        <i class="bx bx-building-house" aria-hidden="true"></i> Tenant / Property Seeker
+                    </option>
+
+                    <option value="owner">
+                        🏢 Property Owner / Business
+                    </option>
+
+                </select>
+
+            </label>
+
+
+            <label>
+                Full name
+
+                <input
+                    type="text"
+                    id="registerName"
+                    placeholder="Enter your full name"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Email address
+
+                <input
+                    type="email"
+                    id="registerEmail"
+                    placeholder="you@example.com"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Phone number
+
+                <input
+                    type="tel"
+                    id="registerPhone"
+                    placeholder="08012345678"
+                    required
+                >
+
+            </label>
+
+
+            <label>
+                Password
+
+                <input
+                    type="password"
+                    id="registerPassword"
+                    placeholder="Create a password"
+                    minlength="6"
+                    required
+                >
+
+            </label>
+
+
+            <label class="checkbox-label">
+
+                <input
+                    type="checkbox"
+                    id="agreeTerms"
+                    required
+                >
+
+                <span>
+                    I agree to the LeaseHub terms and
+                    privacy policy.
+                </span>
+
+            </label>
+
+
+            <button
+                type="submit"
+                class="primary-btn auth-submit"
+            >
+                Create Account
+            </button>
+
+        </form>
+
+        <p id="authStatus" class="form-status" role="status" aria-live="polite"></p>
+
+
+        <div class="auth-footer">
+
+            Already have an account?
+
+            <a href="login.html">
+                Log in
+            </a>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<script src="JS/data.js"></script>
+<script src="JS/app.js"></script>
+
+<script src="JS/leasehub-polish.js"></script>
+
+<footer class="site-footer leasehub-standard-footer"><div class="footer-bottom"><span>© 2026 LeaseHub. All rights reserved.</span><span>Built for Nigeria</span></div></footer>
+</body>
+
+</ht
