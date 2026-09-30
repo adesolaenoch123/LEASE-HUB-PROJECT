@@ -1942,16 +1942,24 @@ if (ownerPropertiesContainer) {
             ? currentUser.properties
             : [];
 
-        document.getElementById(
-            "ownerWelcome"
-        ).textContent =
-            `Welcome back, ${currentUser.name.split(" ")[0]}.`;
+        const ownerWelcomeEl = document.getElementById("ownerWelcome");
+        if (ownerWelcomeEl) {
+            const hour = new Date().getHours();
+            const hello = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+            ownerWelcomeEl.textContent = `${hello}, ${currentUser.name.split(" ")[0]}`;
+        }
 
+        const ownerDashboardNameEl = document.getElementById("ownerDashboardName");
+        if (ownerDashboardNameEl) {
+            ownerDashboardNameEl.textContent = currentUser.name;
+        }
 
-        document.getElementById(
-            "ownerDashboardName"
-        ).textContent =
-            currentUser.name;
+        const sidebarName = document.getElementById("ownerSidebarName");
+        if (sidebarName) sidebarName.textContent = currentUser.name;
+        const sidebarInitial = document.getElementById("ownerSidebarInitial");
+        if (sidebarInitial) sidebarInitial.textContent = (currentUser.name || "O").trim().charAt(0).toUpperCase();
+        const storeTitle = document.getElementById("ownerStoreTitle");
+        if (storeTitle && currentUser.name) storeTitle.textContent = currentUser.name;
 
 
         /* LISTING COUNT */

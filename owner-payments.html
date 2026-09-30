@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payments — LeaseHub Owner</title>
+  <meta name="description" content="Owner payouts, rent collections and payment settings on LeaseHub. Demo UI — real payments not enabled yet.">
+  <link rel="stylesheet" href="CSS/style.css">
+  <link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+<body class="owner-lounge-body" data-owner-page="payments" data-owner-title="Payments">
+
+<div id="ownerShellMount">
+
+  <!-- Status banner -->
+  <section class="owner-panel pay-status-banner">
+    <div class="pay-status-icon"><i class="bx bx-info-circle"></i></div>
+    <div>
+      <strong>Payments are in design mode</strong>
+      <p class="owner-muted">This page shows how rent collection and owner payouts will work. No real money is moved yet. Connect Paystack / Flutterwave / bank payouts later.</p>
+    </div>
+    <span class="owner-plan-pill">DEMO</span>
+  </section>
+
+  <!-- KPI row -->
+  <section class="owner-stat-row pay-kpi-row">
+    <article class="owner-stat">
+      <i class="bx bx-wallet"></i>
+      <strong id="payBalance">₦0</strong>
+      <span>AVAILABLE</span>
+      <small>Ready to withdraw</small>
+    </article>
+    <article class="owner-stat">
+      <i class="bx bx-time-five"></i>
+      <strong id="payPending">₦0</strong>
+      <span>PENDING</span>
+      <small>In escrow / clearing</small>
+    </article>
+    <article class="owner-stat">
+      <i class="bx bx-trending-up"></i>
+      <strong id="payMonth">₦0</strong>
+      <span>THIS MONTH</span>
+      <small>Collected (demo)</small>
+    </article>
+    <article class="owner-stat">
+      <i class="bx bx-check-circle"></i>
+      <strong id="payLifetime">₦0</strong>
+      <span>LIFETIME</span>
+      <small>All-time (demo)</small>
+    </article>
+  </section>
+
+  <section class="owner-grid-2">
+    <!-- Payout method -->
+    <article class="owner-panel">
+      <div class="owner-panel-head">
+        <div>
+          <span>PAYOUT METHOD</span>
+          <h3 class="owner-panel-title">Where you get paid</h3>
+        </div>
+        <button type="button" class="owner-ghost-btn" id="payEditBankBtn">Edit</button>
+      </div>
+      <div class="pay-bank-card" id="payBankCard">
+        <div class="pay-bank-row">
+          <span>Bank</span>
+          <strong id="payBankName">Not set</strong>
+        </div>
+        <div class="pay-bank-row">
+          <span>Account name</span>
+          <strong id="payAccountName">—</strong>
+        </div>
+        <div class="pay-bank-row">
+          <span>Account number</span>
+          <strong id="payAccountNumber">••••</strong>
+        </div>
+        <p class="owner-muted" style="margin-top:12px">Saved only in this browser for demo. Real payouts need a payments provider.</p>
+      </div>
+      <form id="payBankForm" class="pay-bank-form" hidden>
+        <label class="owner-field">Bank name
+          <input type="text" id="payBankNameInput" placeholder="e.g. GTBank" maxlength="60">
+        </label>
+        <label class="owner-field">Account name
+          <input type="text" id="payAccountNameInput" placeholder="Name on account" maxlength="80">
+        </label>
+        <label class="owner-field">Account number
+          <input type="text" id="payAccountNumberInput" placeholder="10-digit NUBAN" maxlength="12" inputmode="numeric">
+        </label>
+        <div class="owner-store-actions">
+          <button type="submit" class="primary-btn">Save payout method</button>
+          <button type="button" class="owner-ghost-btn" id="payBankCancel">Cancel</button>
+        </div>
+      </form>
+    </article>
+
+    <!-- Withdraw -->
+    <article class="owner-panel">
+      <div class="owner-panel-head">
+        <div>
+          <span>WITHDRAW</span>
+          <h3 class="owner-panel-title">Request payout</h3>
+        </div>
+      </div>
+      <p class="owner-muted">When live, cleared rent will show as available balance. Withdrawals will go to your bank after review.</p>
+      <label class="owner-field">Amount (₦)
+        <input type="number" id="payWithdrawAmount" min="0" step="1000" placeholder="0" disabled>
+      </label>
+      <button type="button" class="primary-btn" id="payWithdrawBtn" disabled>Withdraw (coming soon)</button>
+      <p class="owner-muted" style="margin-top:10px">Minimum payout and fees will be set when payments go live.</p>
+    </article>
+  </section>
+
+  <!-- How money flows -->
+  <section class="owner-panel">
+    <div class="owner-panel-head">
+      <div>
+        <span>HOW IT WILL WORK</span>
+        <h3 class="owner-panel-title">Rent collection flow</h3>
+      </div>
+    </div>
+    <div class="pay-flow">
+      <div class="pay-flow-step">
+        <span>01</span>
+        <strong>Tenant pays</strong>
+        <p>Rent / deposit paid on LeaseHub (card, transfer, or USSD).</p>
+      </div>
+      <div class="pay-flow-step">
+        <span>02</span>
+        <strong>Escrow hold</strong>
+        <p>Funds held until move-in / agreement conditions are met.</p>
+      </div>
+      <div class="pay-flow-step">
+        <span>03</span>
+        <strong>Clear to owner</strong>
+        <p>Balance becomes available after fees and any disputes window.</p>
+      </div>
+      <div class="pay-flow-step">
+        <span>04</span>
+        <strong>Bank payout</strong>
+        <p>You withdraw to the bank account saved above.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Transactions table -->
+  <section class="owner-panel">
+    <div class="owner-panel-head">
+      <div>
+        <span>TRANSACTIONS</span>
+        <h3 class="owner-panel-title">Payout & collection history</h3>
+      </div>
+      <div class="pay-filter-tabs" role="tablist">
+        <button type="button" class="is-active" data-pay-filter="all">All</button>
+        <button type="button" data-pay-filter="in">Incoming</button>
+        <button type="button" data-pay-filter="out">Payouts</button>
+      </div>
+    </div>
+    <div class="pay-table-wrap">
+      <table class="pay-table" id="payTable">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Property</th>
+            <th>Type</th>
+            <th>Status</th>
+            <th>Amount</th>
+          </tr>
+        </thead>
+        <tbody id="payTableBody">
+          <tr class="pay-empty-row">
+            <td colspan="6">
+              <div class="dashboard-empty small-empty" style="border:0;padding:28px 10px">
+                <div><i class="bx bx-receipt"></i></div>
+                <h3>No transactions yet</h3>
+                <p>When payments go live, rent collections and withdrawals will appear here.</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Sample demo rows toggle -->
+  <section class="owner-panel">
+    <div class="owner-panel-head">
+      <div>
+        <span>PREVIEW DATA</span>
+        <h3 class="owner-panel-title">Show sample transactions</h3>
+      </div>
+    </div>
+    <p class="owner-muted">Turn on sample rows to see how the table will look. This does not create real money or charges.</p>
+    <label class="pay-toggle">
+      <input type="checkbox" id="paySampleToggle">
+      <span>Load sample payment history</span>
+    </label>
+  </section>
+
+  <!-- Fees -->
+  <section class="owner-panel" id="payFees">
+    <div class="owner-panel-head">
+      <div>
+        <span>FEES (PLANNED)</span>
+        <h3 class="owner-panel-title">Platform pricing draft</h3>
+      </div>
+    </div>
+    <div class="pay-fee-grid">
+      <div>
+        <strong>Free plan</strong>
+        <p class="owner-muted">List properties · Manual follow-up · No online rent collection yet</p>
+      </div>
+      <div>
+        <strong>When payments launch</strong>
+        <p class="owner-muted">Example: small % on successful collections + optional payout fee — final rates TBD</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<script src="JS/owner-shell.js"></script>
+<script src="JS/owner-payments.js"></script>
+</body>
+</html>

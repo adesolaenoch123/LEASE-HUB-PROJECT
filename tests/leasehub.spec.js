@@ -68,3 +68,32 @@ test("property search filters the public catalog", async ({ page }) => {
     await expect(page.locator("#marketplaceProperties .property-card").first()).toBeVisible();
     await expect(page.locator("#marketplaceProperties .property-card").first()).toContainText(/Lekki/i);
 });
+
+test("owner dashboard shows the house tour and subscription plans", async ({ page }) => {
+    await page.addInitScript(() => {
+        localStorage.setItem("leasehubCurrentUser", JSON.stringify({
+            id: "owner-test",
+            name: "Test Owner",
+            email: "owner@example.com",
+            accountType: "owner"
+        }));
+    });
+    await page.goto("/owner-dashboard.html");
+
+    const video = page.locator(".owner-featured-video");
+    await expect(video).toBeVisible();
+    await expect.poll(() => video.evaluate((element) => element.readyState)).toBeGreaterThan(0);
+    await expect(page.locator("#ownerPlanOptions .owner-plan-option")).toHaveCount(3);
+    await expect(page.locator("#ownerPlanOptions")).toContainText("₦20,000");
+
+    await page.getByRole("button", { name: "Subscribe now" }).click();
+    await expect(page.locator("#ownerPlanNotice")).toContainText("checkout is not connected yet");
+
+    await page.setViewportSize({ width: 390, height: 844 });
+    await expect.poll(() => page.locator("#ownerPlanOptions").evaluate((element) =>
+        getComputedStyle(element).gridTemplateColumns.trim().split(/\s+/).length
+    )).toBe(1);
+    await expect.poll(() => page.evaluate(() =>
+        document.documentElement.scrollWidth <= window.innerWidth
+    )).toBe(true);
+});

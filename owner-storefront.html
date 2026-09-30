@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Owner Storefront — LeaseHub</title>
+  <meta name="description" content="Public owner storefront on LeaseHub.">
+  <link rel="stylesheet" href="CSS/style.css">
+  <link rel="stylesheet" href="https://cdn.boxicons.com/3.0.8/fonts/basic/boxicons.min.css">
+</head>
+<body class="owner-lounge-body" data-owner-page="storefront" data-owner-title="Public storefront">
+  <div id="ownerShellMount">
+    <section class="owner-panel">
+      <div class="owner-panel-head">
+        <div>
+          <span>PUBLIC STOREFRONT</span>
+          <h3 class="owner-panel-title">How tenants see your brand</h3>
+        </div>
+        <a href="owner-dashboard.html#ownerStore" class="owner-link">Edit appearance</a>
+      </div>
+      <div class="storefront-hero" id="sfHero">
+        <div class="storefront-hero-inner">
+          <div class="storefront-logo" id="sfLogo">LH</div>
+          <h1 id="sfName">LeaseHub Owner</h1>
+          <p id="sfTagline">Explore quality homes</p>
+          <div class="storefront-goal" id="sfGoal">List quality homes</div>
+        </div>
+      </div>
+      <h3 style="margin:18px 0 12px">Active listings</h3>
+      <div id="sfGrid" class="property-grid"></div>
+      <div id="sfEmpty" class="dashboard-empty small-empty" hidden>
+        <div><i class="bx bx-building-house"></i></div>
+        <h3>No public listings yet</h3>
+        <p>Add a property to show it on your storefront.</p>
+        <a href="add-property.html" class="primary-btn">Add property</a>
+      </div>
+    </section>
+  </div>
+  <script src="JS/owner-shell.js"></script>
+  <script src="JS/data.js"></script>
+  <script src="JS/app.js"></script>
+  <script>
+    (function () {
+      const STORE_KEY = 'leasehub_owner_store_v1';
+      let store = {};
+      try { store = JSON.parse(localStorage.getItem(STORE_KEY) || '{}') || {}; } catch {}
+      const name = store.name || 'LeaseHub Owner';
+      const tagline = store.tagline || 'Explore quality homes';
+      const goal = store.goal || 'List quality homes';
+      document.getElementById('sfName').textContent = name;
+      document.getElementById('sfTagline').textContent = tagline;
+      document.getElementById('sfGoal').textContent = goal;
+      if (store.banner) {
+        const hero = document.getElementById('sfHero');
+        hero.style.backgroundImage = `linear-gradient(rgba(15,23,19,.45), rgba(15,23,19,.65)), url("${store.banner}")`;
+        hero.style.backgroundSize = 'cover';
+        hero.style.backgroundPosition = 'center';
+      }
+      if (store.logo) {
+        document.getElementById('sfLogo').innerHTML = `<img src="${store.logo}" alt="Logo">`;
+      }
+      // Listings from current owner if available
+      let user = null;
+      try {
+        user = JSON.parse(localStorage.getItem('leaseHubCurrentUser') || localStorage.getItem('currentUser') || 'null');
+      } catch {}
+      const grid = document.getElementById('sfGrid');
+      const empty = document.getElementById('sfEmpty');
+      const props = (typeof properties !== 'undefined' && Array.isArray(properties)) ? properties : [];
+      const ids = Array.isArray(user?.properties) ? user.properties : [];
+      const mine = ids.length
+        ? props.filter(p => ids.map(String).includes(String(p.id)))
+        : props.slice(0, 6);
+      if (!mine.length) {
+        empty.hidden = false;
+        return;
+      }
+      empty.hidden = true;
+      grid.innerHTML = mine.map(p => `
+        <a class="property-card" href="property-details.html?id=${encodeURIComponent(p.id)}">
+          <img src="${p.image || ''}" alt="${p.title || ''}">
+          <div class="property-info">
+            <h3>${p.title || 'Property'}</h3>
+            <p>${p.location || p.city || ''}</p>
+            <strong>${p.price ? '₦' + Number(p.price).toLocaleString() : ''}</strong>
+          </div>
+        </a>`).join('');
+    })();
+  </script>
+</body>
+</html>

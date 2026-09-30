@@ -1384,5 +1384,22 @@
 <script src="JS/leasehub-polish.js"></script>
 
 <footer class="site-footer leasehub-standard-footer"><div class="footer-bottom"><span>© 2026 LeaseHub. All rights reserved.</span><span>Built for Nigeria</span></div></footer>
+
+<script src="JS/owner-shell.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Lightweight lounge strip for messages page (keeps existing chat UI)
+  if (document.querySelector('.owner-messages-lounge-strip')) return;
+  const strip = document.createElement('div');
+  strip.className = 'owner-messages-lounge-strip';
+  strip.innerHTML = `
+    <a href="owner-dashboard.html"><i class="bx bx-grid-alt"></i> Dashboard</a>
+    <a href="add-property.html"><i class="bx bx-plus-circle"></i> Add property</a>
+    <a href="owner-dashboard.html#ownerStore"><i class="bx bx-store"></i> My Store</a>
+    <a href="owner-storefront.html"><i class="bx bx-store-alt"></i> Storefront</a>
+    <a href="properties.html"><i class="bx bx-log-out"></i> Marketplace</a>`;
+  document.body.insertBefore(strip, document.body.firstChild);
+});
+</script>
 </body>
 </html>
